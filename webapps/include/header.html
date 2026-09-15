@@ -1,0 +1,79 @@
+<!-- Header include: navigation et mobile menu -->
+<header id="main-header" class="fixed inset-x-0 top-0 z-30 transition-all duration-300 text-white" style="background: transparent;">
+  <div class="max-w-6xl mx-auto flex items-center justify-between px-4 py-4">
+    <a href="/" class="flex items-center">
+      <img src="./../assets/logo.png" alt="E2C" class="h-10" />
+    </a>
+
+    <nav aria-label="Navigation principale" class="hidden md:flex items-center space-x-6">
+      <a href="/" class="nav-link text-white hover:text-red-500 transition-colors">Accueil</a>
+      <a href="/about.html" class="nav-link text-white hover:text-red-500 transition-colors">A propos</a>
+      <a href="/services.html" class="nav-link text-white hover:text-red-500 transition-colors">Services</a>
+      <div class="relative group">
+        <button class="nav-link flex items-center gap-1 text-white hover:text-red-500 transition-colors">Activités</button>
+        <div class="absolute left-0 mt-2 w-56 bg-white text-gray-800 border rounded shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all">
+          <a class="block px-4 py-2 text-sm hover:bg-gray-50" href="/Production.html">Production</a>
+          <a class="block px-4 py-2 text-sm hover:bg-gray-50" href="/bills.html">Facture</a>
+          <a class="block px-4 py-2 text-sm hover:bg-gray-50" href="/transport.html">Transport</a>
+          <a class="block px-4 py-2 text-sm hover:bg-gray-50" href="/commerce.html">Commercialisation</a>
+        </div>
+      </div>
+      <a href="/projects.html" class="nav-link text-white hover:text-red-500 transition-colors">Projets</a>
+      <div class="relative group">
+        <button class="nav-link flex items-center gap-1 text-white hover:text-red-500 transition-colors">Médias</button>
+        <div class="absolute left-0 mt-2 w-56 bg-white text-gray-800 border rounded shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all">
+          <a class="block px-4 py-2 text-sm hover:bg-gray-50" href="/news.html">Actualités</a>
+          <a class="block px-4 py-2 text-sm hover:bg-gray-50" href="/tv.html">Megawatt TV</a>
+          <a class="block px-4 py-2 text-sm hover:bg-gray-50" href="/favorites.html">Favoris</a>
+          <a class="block px-4 py-2 text-sm hover:bg-gray-50" href="/map.html">Carte</a>
+          <a class="block px-4 py-2 text-sm hover:bg-gray-50" href="/telecharge.html">Téléchargements</a>
+        </div>
+      </div>
+      <a href="/contact.html" class="nav-link text-white hover:text-red-500 transition-colors">Contact</a>
+    </nav>
+
+    <div class="flex items-center space-x-2">
+      <button id="open-login" class="px-4 py-2 rounded border border-gray-200 hover:shadow bg-red-600 text-white">Se connecter</button>
+      <button id="mobile-menu-btn" class="md:hidden p-2 text-white hover:bg-white/10 rounded">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="md:hidden hidden border-t bg-black/60 text-white">
+    <div class="px-4 py-3 space-y-2">
+      <a href="/" class="block py-2">Accueil</a>
+      <a href="/about.html" class="block py-2">A propos</a>
+      <a href="/services.html" class="block py-2">Services</a>
+      <div class="relative group">
+        <button class="flex items-center gap-1 text-white hover:text-red-300">Activités</button>
+        <div class="absolute left-0 mt-2 w-56 bg-white text-gray-800 border rounded shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all">
+          <a class="block px-4 py-2 text-sm hover:bg-gray-50" href="/Production.html">Production</a>
+          <a class="block px-4 py-2 text-sm hover:bg-gray-50" href="/bills.html">Facture</a>
+          <a class="block px-4 py-2 text-sm hover:bg-gray-50" href="/transport.html">Transport</a>
+          <a class="block px-4 py-2 text-sm hover:bg-gray-50" href="/commerce.html">Commercialisation</a>
+        </div>
+      </div>
+      <a href="/production.html" class="block py-2">Production</a>
+      <a href="/transport.html" class="block py-2">Transport</a>
+      <a href="/commerce.html" class="block py-2">Commercialisation</a>
+      <a href="/projects.html" class="block py-2">Projets</a>
+      <div class="relative group">
+        <button class="flex items-center gap-1 text-white hover:text-red-300">Médias</button>
+        <div class="absolute left-0 mt-2 w-56 bg-white text-gray-800 border rounded shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all">
+          <a class="block px-4 py-2 text-sm hover:bg-gray-50" href="/news.html">Actualités</a>
+          <a class="block px-4 py-2 text-sm hover:bg-gray-50" href="/tv.html">Megawatt TV</a>
+          <a class="block px-4 py-2 text-sm hover:bg-gray-50" href="/favorites.html">Favoris</a>
+          <a class="block px-4 py-2 text-sm hover:bg-gray-50" href="/map.html">Carte</a>
+          <a class="block px-4 py-2 text-sm hover:bg-gray-50" href="/telecharge.html">Téléchargements</a>
+        </div>
+      </div>
+      <a href="/news.html" class="block py-2">Actualités</a>
+      <a href="/contact.html" class="block py-2">Contact</a>
+      <a href="#" id="open-login-mobile" class="block py-2 btn-danger">Se connecter</a>
+      <a href="#" id="open-register-mobile" class="block py-2">Créer un compte</a>
+    </div>
+  </div>
+</header>

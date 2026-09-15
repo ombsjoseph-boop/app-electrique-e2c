@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utilisateurs - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0px 0;
+        }
+        .navbar {
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: white !important;
+            font-size: 1.5rem;
+        }
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+        .nav-link:hover {
+            color: white !important;
+        }
+        .container-main {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        .table {
+            margin-top: 20px;
+        }
+        .table thead {
+            background: #f8f9fa;
+            border-top: 2px solid #667eea;
+        }
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #667eea;
+        }
+        .user-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+    </style>
+<body>
+    <!-- Navigation -->
+    
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+          <i class="bi bi-speedometer2"></i> Dashboard
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="bi bi-house"></i> Accueil
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard/users">
+                <i class="bi bi-people"></i> Utilisateurs
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard/items">
+                <i class="bi bi-list-check"></i> Items
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard/analytics">
+                <i class="bi bi-graph-up"></i> Statistiques
+              </a>
+            </li>
+            </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="/dashboard/db">
+                   <i class="fa-solid fa-database"></i>Base de données
+                   </a>
+                    </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Main Container -->
+    <div class="container-fluid px-4">
+        <div class="container-main">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 style="color: #667eea;">
+                    <i class="bi bi-people"></i> Gestion des Utilisateurs
+                </h2>
+                <button class="btn btn-primary" onclick="location.reload()">
+                    <i class="bi bi-arrow-clockwise"></i> Rafraîchir
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover" id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom d'utilisateur</th>
+                            <th>Mot de passe</th>
+                            <th>Date de création</th>
+                            <th>Source</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersBody">
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">
+                                <i class="bi bi-hourglass-split"></i> Chargement...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center p-4 m-0 t-4">
+      <div class="container">
+        <p class="mb-0">
+          &copy; 2025 Dashboard E²C congo. Tous droits réservés.
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script>
+        const socket = io();
+
+        function updateUsersTable(users) {
+            const tbody = document.getElementById('usersBody');
+            tbody.innerHTML = '';
+            if (users.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-4">Aucun utilisateur trouvé</td></tr>';
+                return;
+            }
+            users.forEach(user => {
+                const avatar = user.photo ? `<img src="${user.photo}" alt="${user.username}" class="avatar">` : '<img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22%3E%3Crect width=%2250%22 height=%2250%22 fill=%22%23667eea%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2224%22 fill=%22white%22 font-weight=%22bold%22%3E' + user.username.charAt(0).toUpperCase() + '%3C/text%3E%3C/svg%3E" class="avatar" alt="' + user.username + '">';
+                const row = `
+                    <tr>
+                        <td><div class="user-row">${avatar}<span class="badge bg-primary">${user.id}</span></div></td>
+                        <td><strong>${user.username}</strong></td>
+                        <td><code class="bg-light p-2 rounded" style="font-size: 0.9rem;">${user.password}</code></td>
+                        <td>${user.created_at ? new Date(user.created_at).toLocaleString('fr-FR') : 'N/A'}</td>
+                        <td><span class="badge bg-secondary">${user.source}</span></td>
+                        <td>
+                            <a href="/dashboard/items?user_id=${user.id}" class="btn btn-sm btn-info">
+                                <i class="bi bi-eye"></i> Items
+                            </a>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        socket.on('dashboard_update', function(data) {
+            updateUsersTable(data.users);
+            console.log('Users table updated:', data.users.length, 'users');
+        });
+
+        // recharge
+        socket.on('connect', function() {
+            console.log('Connected to dashboard');
+        });
+    </script>
+</body>
+</html>

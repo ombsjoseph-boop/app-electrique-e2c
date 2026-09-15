@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Envoyer une info — E2C</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;background:#f3f4f6;padding:40px}
+    .card{max-width:640px;margin:0 auto;background:#fff;padding:24px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+    label{display:block;margin-top:12px;font-weight:600}
+    input,textarea{width:100%;padding:10px;margin-top:6px;border:1px solid #ddd;border-radius:6px}
+    button{margin-top:16px;padding:12px 18px;background:#0b74de;color:#fff;border:none;border-radius:6px;cursor:pointer}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Envoyer une information</h1>
+    <p>Ce formulaire enverra directement les données dans la table <code>info</code> de la base <code>app</code>.</p>
+
+    <form method="post" action="/submit-info">
+      <label>Nom complet <input type="text" name="nom" placeholder="Votre nom"></label>
+      <label>Email <input type="email" name="email" placeholder="exemple@email.com"></label>
+      <label>Téléphone <input type="text" name="num_tel" placeholder="+242 ..."></label>
+      <label>Message <textarea name="message" rows="6" placeholder="Votre message..."></textarea></label>
+      <button type="submit">Envoyer</button>
+    </form>
+
+    <p style="margin-top:12px;color:#666">Après envoi, vous serez redirigé vers une page de confirmation.</p>
+  </div>
+</body>
+</html>

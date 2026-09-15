@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - App Moderne</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-image: url("https://e2c.cg/wp-content/uploads/2026/06/cover1.webp");
+        background-size: cover;
+        background-position: center;
+        min-height: 100vh;
+        padding: 0px 0;
+      }
+      .navbar {
+        background: rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      .navbar-brand {
+        font-weight: bold;
+        color: white !important;
+        font-size: 1.5rem;
+      }
+      .nav-link {
+        color: rgba(255, 255, 255, 0.8) !important;
+        transition: color 0.3s;
+      }
+      .nav-link:hover {
+        color: white !important;
+      }
+      .card {
+        border: none;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
+      }
+      .stat-card {
+        background: white;
+        padding: 30px;
+        text-align: center;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #667eea;
+        margin: 15px 0;
+      }
+      .stat-label {
+        color: #6c757d;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .stat-icon {
+        font-size: 2rem;
+        color: #667eea;
+      }
+      .container-main {
+        
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+       
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 8px;
+        padding: 10px 24px;
+        transition: transform 0.3s;
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+      }
+      .table {
+        margin-top: 20px;
+      }
+      .table thead {
+        background: #f8f9fa;
+        border-top: 2px solid #667eea;
+      }
+      .table-hover tbody tr:hover {
+        background-color: #f8f9ff;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+          <i class="bi bi-speedometer2"></i> Tableaux de bord
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="bi bi-house"></i> Accueil
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard/users">
+                <i class="bi bi-people"></i> Utilisateurs
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard/items">
+                <i class="bi bi-list-check"></i> Items
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard/analytics">
+                <i class="bi bi-graph-up"></i> Statistiques
+              </a>
+            </li>
+            <li class="nav-item">
+                    <a class="nav-link" href="/dashboard/db">
+                   <i class="fa-solid fa-database"></i>Base de données
+                   </a>
+             </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Conteneur principal -->
+    <div class="container-fluid px-4">
+      <!-- Section Héros -->
+      <div class="container-main">
+        <div class="row align-items-center">
+          <div class="col-md-4">
+            <h1 class="mb-3" style="color: #667eea">
+              <i class="bi bi-speedometer2"></i> Bienvenue sur le Tableaux de bord
+            </h1>
+             {% include "include/header.html"%}
+            <p class="text-muted lead">
+              Gérez vos utilisateurs, items et consultez les statistiques en
+              temps réel.
+            </p>
+          </div>
+          <div class="col-md-8 text-end">
+            <a href="/dashboard/users" class="btn btn-primary btn-lg">
+              <i class="bi bi-plus-circle"></i> Gérer les utilisateurs
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cartes de statistiques -->
+      <div class="row mb-5">
+        <div class="col-md-4 mb-4">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="bi bi-people-fill"></i>
+            </div>
+            <div class="stat-label">Utilisateurs</div>
+            <div class="stat-number" id="user-count">{{ user_count }}</div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="bi bi-file-text-fill"></i>
+            </div>
+            <div class="stat-label">Items</div>
+            <div class="stat-number" id="item-count">{{ item_count }}</div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="bi bi-activity"></i>
+            </div>
+            <div class="stat-label">Statut Système</div>
+            <div class="stat-number" style="color: #28a745">
+              <i class="bi bi-check-circle-fill"></i> Actif
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions rapides -->
+      <div class="container-main">
+        <h3 class="mb-4" style="color: #667eea">
+          <i class="bi bi-lightning-fill"></i> Actions Rapides
+        </h3>
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <a
+              href="/dashboard/users"
+              class="btn btn-outline-primary w-100 py-3"
+            >
+              <i class="bi bi-people"></i><br />Voir tous les utilisateurs
+            </a>
+          </div>
+          <div class="col-md-3 mb-3">
+            <a
+              href="/dashboard/items"
+              class="btn btn-outline-primary w-100 py-3"
+            >
+              <i class="bi bi-list-check"></i><br />Voir tous les items
+            </a>
+          </div>
+          <div class="col-md-3 mb-3">
+            <a
+              href="/dashboard/analytics"
+              class="btn btn-outline-primary w-100 py-3"
+            >
+              <i class="bi bi-graph-up"></i><br />Voir les statistiques
+            </a>
+          </div>
+          <div class="col-md-3 mb-3">
+            <button
+              onclick="refreshDashboard()"
+              class="btn btn-outline-secondary w-100 py-3"
+            >
+              <i class="bi bi-arrow-clockwise"></i><br />Rafraîchir
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pied de page -->
+    <footer class="bg-dark text-white text-center p-4 m-0 t-4">
+      <div class="container">
+        <p class="mb-0">
+          &copy; 2025 Dashboard E²C congo. Tous droits réservés.
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="/dashboard/js/"></script>
+    <script>
+      const socket = io();
+
+      socket.on("dashboard_update", function (data) {
+        // mise ajours du nombre d'utilisateurs
+        document.getElementById("user-count").textContent = data.user_count;
+
+        // mise ajours du nombre d'items
+        document.getElementById("item-count").textContent = data.item_count;
+
+        console.log("Dashboard updated:", data);
+      });
+
+      function refreshDashboard() {
+        fetch("/api/refresh")
+          .then((response) => response.json())
+          .then((data) => console.log("Refreshed:", data));
+      }
+    </script>
+  </body>
+</html>

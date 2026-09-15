@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base de données - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 0px 0; }
+        .navbar { background: rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.2); }
+        .container-main { background: white; border-radius: 12px; padding: 24px; margin-top: 30px; }
+        .table-responsive { max-height: 60vh; overflow: auto; }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <i class="bi bi-speedometer2"></i> Dashboard
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse ">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Accueil</a></li>
+                <li class="nav-item"><a class="nav-link" href="/dashboard/users">Utilisateurs</a></li>
+                <li class="nav-item"><a class="nav-link" href="/dashboard/items">Items</a></li>
+                <li class="nav-item"><a class="nav-link" href="/dashboard/analytics">Statistiques</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/dashboard/db">Base de données</a></li>
+                {% if session.admin_logged_in %}
+                <li class="nav-item"><a class="nav-link" href="/admin/set_password">Gérer comptes admin</a></li>
+                <li class="nav-item"><a class="nav-link" href="/logout">Se déconnecter</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="/login">Se connecter</a></li>
+                {% endif %}            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid px-4">
+    <div class="container-main">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3><i class="bi bi-database"></i> Explorateur de base de données</h3>
+            <div>
+                <select id="dbSelect" class="form-select form-select-sm">
+                    <option value="app_data" selected>app_data</option>
+                    <option value="app">app</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="list-group" id="tablesList">
+                    <div class="text-muted p-3">Chargement des tables...</div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="mb-3 d-flex justify-content-between">
+                    <h5 id="tableTitle">Choisissez une table</h5>
+                    <div>
+                        <button id="refreshBtn" class="btn btn-sm btn-outline-primary">Rafraîchir</button>
+                        <button id="downloadCsv" class="btn btn-sm btn-outline-success">Télécharger CSV</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm" id="rowsTable">
+                        <thead id="rowsHead"></thead>
+                        <tbody id="rowsBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modifier la ligne <span id="editTitle"></span></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editForm"></form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-primary" id="saveEdit">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FK Violation Modal -->
+<div class="modal fade" id="fkModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Conflit de clé étrangère</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="fkModalBody"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-danger" id="fkCascadeBtn">Supprimer en cascade</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+async function fetchTables(db){
+    const res = await fetch(`/api/db/${db}/tables`);
+    if(!res.ok) return [];
+    return await res.json();
+}
+async function fetchRows(db, table){
+    const res = await fetch(`/api/db/${db}/tables/${table}`);
+    if(!res.ok) { const err = await res.json().catch(()=>({})); return {error: err}; }
+    return await res.json();
+}
+
+function showTables(tables, db){
+    const list = document.getElementById('tablesList');
+    list.innerHTML = '';
+    if(tables.length === 0){ list.innerHTML = '<div class="text-muted p-3">Aucune table</div>'; return; }
+    tables.forEach(t => {
+        const a = document.createElement('button');
+        a.className = 'list-group-item list-group-item-action';
+        a.textContent = t;
+        a.onclick = async ()=>{ await loadTable(db, t); };
+        list.appendChild(a);
+    });
+}
+
+async function loadTable(db, table){
+    document.getElementById('tableTitle').textContent = `${db}.${table}`;
+    document.getElementById('rowsHead').innerHTML = '<tr><th>Chargement...</th></tr>';
+    document.getElementById('rowsBody').innerHTML = '';
+    const rows = await fetchRows(db, table);
+    if(rows && rows.error){
+        document.getElementById('rowsHead').innerHTML = '<tr><th>Erreur</th></tr>';
+        document.getElementById('rowsBody').innerHTML = `<tr><td class="text-danger">${rows.error.error || JSON.stringify(rows.error)}</td></tr>`;
+        return;
+    }
+    if(!rows || rows.length === 0){
+        document.getElementById('rowsHead').innerHTML = '<tr><th>Aucune colonne</th></tr>';
+        document.getElementById('rowsBody').innerHTML = '<tr><td class="text-muted">Aucune ligne</td></tr>';
+        return;
+    }
+    const cols = Object.keys(rows[0]);
+
+    // détecter la clé primaire
+    let pkCol = cols[0];
+    try{
+        const pkRes = await fetch(`/api/db/${db}/tables/${table}/pk`);
+        if(pkRes.ok){
+            const pkJson = await pkRes.json();
+            if(pkJson.pk) pkCol = pkJson.pk;
+        }
+    }catch(e){
+        // ignore erreurs
+    }
+
+    // ajouter actions aux colonnes
+    document.getElementById('rowsHead').innerHTML = '<tr>' + cols.map(c=>`<th>${c}</th>`).join('') + '<th>Actions</th></tr>';
+    document.getElementById('rowsBody').innerHTML = rows.map(r=>{
+        const pkVal = r[pkCol];
+        const safeRow = JSON.stringify(r).replace(/</g,'\\u003c');
+        const actions = `
+            <td>
+                <button class="btn btn-sm btn-warning me-1" onclick='openEditModal("${db}", "${table}", "${pkCol}", "${String(pkVal).replace(/"/g,'\"')}", ${safeRow})'>Modifier</button>
+                <button class="btn btn-sm btn-danger" onclick='deleteRow("${db}", "${table}", "${pkCol}", "${String(pkVal).replace(/"/g,'\"')}")'>Supprimer</button>
+            </td>`;
+        return '<tr>'+cols.map(c=>`<td>${r[c]===null?'<em>null</em>':String(r[c])}</td>`).join('') + actions + '</tr>'
+    }).join('');
+}
+
+async function refresh(){
+    const db = document.getElementById('dbSelect').value;
+    const tables = await fetchTables(db);
+    showTables(tables, db);
+}
+
+document.getElementById('dbSelect').addEventListener('change', refresh);
+document.getElementById('refreshBtn').addEventListener('click', refresh);
+
+document.getElementById('downloadCsv').addEventListener('click', ()=>{
+    const title = document.getElementById('tableTitle').textContent;
+    if(!title.includes('.')) return alert('Sélectionnez une table');
+    const [db, table] = title.split('.');
+    fetch(`/api/db/${db}/tables/${table}`).then(r=>r.json()).then(rows=>{
+        if(!rows || rows.length===0) return alert('Aucune ligne');
+        const cols = Object.keys(rows[0]);
+        const csv = [cols.join(',')].concat(rows.map(r=>cols.map(c=>`"${String(r[c]===null?'':r[c]).replace(/"/g,'""')}"`).join(','))).join('\n');
+        const blob = new Blob([csv], {type:'text/csv'});
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `${db}_${table}.csv`;
+        a.click();
+    });
+});
+
+// Gestion des suppressions
+async function deleteRow(db, table, pkCol, pkVal){
+    if(!confirm(`Supprimer ${db}.${table} ${pkCol}=${pkVal} ?`)) return;
+    const endpoint = `/api/db/${db}/tables/${table}/row/${encodeURIComponent(pkVal)}`;
+    const res = await fetch(endpoint, {method:'DELETE'});
+    if(res.status === 204){
+        alert('Supprimé');
+        refresh();
+        return;
+    }
+
+    // gestion des erreurs de contrainte FK
+    if(res.status === 409){
+        let ej = {};
+        try { ej = await res.json(); } catch(e){ ej = {error: 'foreign_key_violation', message: 'Contrainte FK'}; }
+        if(ej.error === 'foreign_key_violation'){
+            const refs = ej.references || [];
+            const body = document.getElementById('fkModalBody');
+            body.innerHTML = `<p>La ligne a des références dans d'autres tables :</p>
+                <ul>${refs.map(r=>`<li><strong>${r.table}</strong>.<em>${r.column}</em> — ${r.count===null? 'nombre inconnu' : r.count + ' ligne(s)'}</li>`).join('')}</ul>
+                <p class="text-danger">Vous pouvez annuler ou tenter une suppression en cascade (supprimera les lignes dépendantes).</p>`;
+            const fkModalEl = document.getElementById('fkModal');
+            const fkModal = new bootstrap.Modal(fkModalEl);
+            fkModal.show();
+            document.getElementById('fkCascadeBtn').onclick = async function(){
+                fkModal.hide();
+                // supprimer en cascade
+                const cres = await fetch(endpoint + '?cascade=true', {method:'DELETE'});
+                if(cres.status === 204){ alert('Supprimé en cascade'); refresh(); }
+                else {
+                    let msg = 'unknown';
+                    try { const ej2 = await cres.json(); msg = ej2.error || ej2.message || JSON.stringify(ej2); } catch(e){ try{ msg = await cres.text(); }catch(e2){} }
+                    alert('Erreur lors suppression en cascade: '+msg);
+                }
+            }
+            return;
+        }
+    }
+
+    // rappele les autre erreurs
+    let errMsg = 'unknown';
+    try {
+        const ej = await res.json();
+        errMsg = ej.error || JSON.stringify(ej);
+    } catch (ex) {
+        try { const txt = await res.text(); errMsg = txt || errMsg; } catch(e2){}
+    }
+    alert('Erreur: '+errMsg);
+}
+
+function openEditModal(db, table, pkCol, pkVal, row){
+    const modalEl = document.getElementById('editModal');
+    const form = document.getElementById('editForm');
+    document.getElementById('editTitle').textContent = `${db}.${table} ${pkCol}=${pkVal}`;
+    form.innerHTML = '';
+    const cols = Object.keys(row);
+    cols.forEach(c=>{
+        const val = row[c]===null? '': row[c];
+        const disabled = (c === pkCol) ? 'disabled' : '';
+        form.innerHTML += `<div class="mb-2"><label class="form-label">${c}</label><input name="${c}" class="form-control" value="${String(val).replace(/"/g,'\"')}" ${disabled}></div>`;
+    });
+    // affiche les modals
+    var modal = new bootstrap.Modal(modalEl);
+    modal.show();
+
+    document.getElementById('saveEdit').onclick = async function(){
+        // collect valeurs et envoie  
+        const formData = new FormData(form);
+        const payload = {};
+        for(const [k,v] of formData.entries()){
+            if(k === pkCol) continue; 
+            payload[k] = v;
+        }
+        const res = await fetch(`/api/db/${db}/tables/${table}/row/${encodeURIComponent(pkVal)}`, {method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+        if(res.status === 204){
+            alert('Modifié');
+            modal.hide();
+            refresh();
+        } else {
+            let errMsg = 'unknown';
+            try { const ej = await res.json(); errMsg = ej.error || JSON.stringify(ej); }
+            catch(ex){ try { const txt = await res.text(); errMsg = txt || errMsg; } catch(e2){} }
+            alert('Erreur: '+errMsg);
+        }
+    }
+}
+
+// initialiser les donnees
+refresh();
+</script>
+<footer class="bg-dark text-white text-center p-4 m-0 t-4">
+      <div class="container">
+        <p class="mb-0">
+          &copy; 2025 Dashboard E²C congo. Tous droits réservés.
+        </p>
+      </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!-- Carrousel principal hero -->
+<section id="hero-carousel" class="w-full">
+  {% include 'include/header.html' %}
+
+  <div class="relative w-full h-[520px] md:h-[680px] overflow-hidden">
+
+    <!-- ── Slide 0 ── -->
+    <div class="hero-slide absolute inset-0 transition-opacity duration-700"
+         data-slide="0"
+         style="opacity:1; background-image:url('./assets/bg.jpg'); background-size:cover; background-position:center top;">
+      <!-- Overlay dégradé gauche -->
+      <div class="absolute inset-0" style="background: linear-gradient(90deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 60%, transparent 100%);"></div>
+      <!-- Contenu slide 0 -->
+      <div class="slide-content relative z-10 h-full flex flex-col justify-end pb-20 px-8 md:px-20 max-w-2xl">
+        <span class="inline-block mb-4 px-3 py-1 bg-white text-gray-800 text-sm font-semibold rounded w-fit">
+          Energie Electrique du Congo
+        </span>
+        <h1 class="text-3xl md:text-5xl font-extrabold text-white leading-tight">
+          Découvrez comment nous<br>
+          produisons et<br>
+          distribuons <span class="text-yellow-400">l'électricité</span><br>
+          à travers tout le pays.
+        </h1>
+        <div class="mt-8">
+          <a href="/about.html"
+             class="inline-block px-7 py-3 bg-yellow-400 text-gray-900 font-bold rounded hover:bg-yellow-300 transition-colors">
+            En savoir plus
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Slide 1 ── -->
+    <div class="hero-slide absolute inset-0 transition-opacity duration-700"
+         data-slide="1"
+         style="opacity:0; background-image:url('./assets/bg6.png'); background-size:cover; background-position:center;">
+      <div class="absolute inset-0" style="background: linear-gradient(90deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 60%, transparent 100%);"></div>
+      <!-- Contenu slide 1 -->
+      <div class="slide-content relative z-10 h-full flex flex-col justify-end pb-20 px-8 md:px-20 max-w-2xl">
+        <span class="inline-block mb-4 px-3 py-1 bg-white text-gray-800 text-sm font-semibold rounded w-fit">
+          Réseau National
+        </span>
+        <h1 class="text-3xl md:text-5xl font-extrabold text-white leading-tight">
+          Un réseau électrique<br>
+          moderne qui connecte<br>
+          <span class="text-yellow-400">chaque province</span><br>
+          du Congo.
+        </h1>
+        <div class="mt-8">
+          <a href="/services.html"
+             class="inline-block px-7 py-3 bg-yellow-400 text-gray-900 font-bold rounded hover:bg-yellow-300 transition-colors">
+            Nos services
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Slide 2 ── -->
+    <div class="hero-slide absolute inset-0 transition-opacity duration-700"
+         data-slide="2"
+         style="opacity:0; background-image:url('./assets/bg5.png'); background-size:cover; background-position:center;">
+      <div class="absolute inset-0" style="background: linear-gradient(90deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 60%, transparent 100%);"></div>
+      <!-- Contenu slide 2 -->
+      <div class="slide-content relative z-10 h-full flex flex-col justify-end pb-20 px-8 md:px-20 max-w-2xl">
+        <span class="inline-block mb-4 px-3 py-1 bg-white text-gray-800 text-sm font-semibold rounded w-fit">
+          Énergie Renouvelable
+        </span>
+        <h1 class="text-3xl md:text-5xl font-extrabold text-white leading-tight">
+          Investir dans un avenir<br>
+          durable grâce aux<br>
+          <span class="text-yellow-400">énergies propres</span><br>
+          et accessibles.
+        </h1>
+        <div class="mt-8">
+          <a href="/projects.html"
+             class="inline-block px-7 py-3 bg-yellow-400 text-gray-900 font-bold rounded hover:bg-yellow-300 transition-colors">
+            Voir nos projets
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Contrôles ── -->
+    <button id="hero-prev" aria-label="Précédent"
+      class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center bg-white/20 hover:bg-white/40 rounded-full border border-white/30 backdrop-blur-sm transition-all">
+      <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+    </button>
+    <button id="hero-next" aria-label="Suivant"
+      class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center bg-white/20 hover:bg-white/40 rounded-full border border-white/30 backdrop-blur-sm transition-all">
+      <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+      </svg>
+    </button>
+
+    <!-- ── Indicateurs barres ── -->
+    <div class="absolute bottom-8 left-8 md:left-20 z-20 flex items-center gap-2">
+      <button class="h-1 rounded-full bg-yellow-400 transition-all duration-500 w-8" data-indicator="0" aria-label="Slide 1"></button>
+      <button class="h-1 rounded-full bg-white/40 hover:bg-white/70 transition-all duration-500 w-4" data-indicator="1" aria-label="Slide 2"></button>
+      <button class="h-1 rounded-full bg-white/40 hover:bg-white/70 transition-all duration-500 w-4" data-indicator="2" aria-label="Slide 3"></button>
+    </div>
+
+    <!-- ── Numéro de slide ── -->
+    <div class="absolute bottom-8 right-8 z-20 text-white/60 text-sm font-mono select-none">
+      <span id="hero-slide-num">01</span> / 03
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,11 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Lancer le serveur du tableau de bord et du main.py",
+			"type": "shell",
+			"command": "& \"D:/dosier projet developement/python/ProjetSoutenance/porjetFin_annee/.venv/Scripts/python.exe\" \"d:/dosier projet developement/python/ProjetSoutenance/porjetFin_annee/dashboard.py\" & \"D:/dosier projet developement/python/ProjetSoutenance/porjetFin_annee/.venv/Scripts/python.exe\" \"d:/dosier projet developement/python/ProjetSoutenance/porjetFin_annee/main.py\"",
+			"isBackground": true
+		}
+	]
+}

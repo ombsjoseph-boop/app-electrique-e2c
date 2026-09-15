@@ -1,0 +1,190 @@
+import React, { useState, useRef } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  TextInput,
+  FlatList,
+} from "react-native";
+
+import { RTCView, mediaDevices, RTCPeerConnection } from "react-native-webrtc";
+
+const { width } = Dimensions.get("window");
+
+// Données agents
+const agents = [
+  { id: 1, name: "Jean Mavoungou", status: "En ligne" },
+  { id: 2, name: "Patrick Okemba", status: "En intervention" },
+  { id: 3, name: "Arnaud Nzambe", status: "Hors ligne" },
+];
+
+// Config WebRTC simple (peer connection)
+const configuration = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
+
+export default function Person() {
+  const [localStream, setLocalStream] = useState<any>(null);
+  const [remoteStream, setRemoteStream] = useState<any>(null);
+  const pc = useRef<RTCPeerConnection | null>(null);
+
+  const [chatMessages, setChatMessages] = useState<{ from: string; text: string }[]>([]);
+  const [messageText, setMessageText] = useState("");
+
+  // DÉBUT WebRTC
+  const startCall = async () => {
+    pc.current = new RTCPeerConnection(configuration);
+
+    // Obtenir la caméra et micro
+    const stream = await mediaDevices.getUserMedia({ audio: true, video: true });
+    setLocalStream(stream);
+
+    stream.getTracks().forEach((track) => pc.current?.addTrack(track, stream));
+
+    pc.current.ontrack = (event: any) => {
+  // event.streams est un tableau de MediaStream
+  if (event.streams && event.streams[0]) {
+    setRemoteStream(event.streams[0]);
+  }
+};
+
+    // Ici, pour prototype, pas de vrai signalisation
+    // Dans vrai app → échange SDP avec serveur
+    console.log("WebRTC peer connection ready");
+  };
+
+  const endCall = () => {
+    pc.current?.close();
+    setLocalStream(null);
+    setRemoteStream(null);
+  };
+  // FIN WebRTC
+
+  // Chat simple local
+  const sendMessage = () => {
+    if (messageText.trim() === "") return;
+    setChatMessages([...chatMessages, { from: "Moi", text: messageText }]);
+    setMessageText("");
+  };
+
+  return (
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      {/* HEADER */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>👷 Agents Électricité</Text>
+        <Text style={styles.headerSubtitle}>
+          Appel interne & chat agents
+        </Text>
+      </View>
+
+      {/* GRID */}
+      <View style={styles.grid}>
+        <View style={styles.gridCard}>
+          <Text style={styles.gridValue}>{agents.length}</Text>
+          <Text style={styles.gridLabel}>Agents</Text>
+        </View>
+        <View style={styles.gridCard}>
+          <Text style={styles.gridValue}>2</Text>
+          <Text style={styles.gridLabel}>En ligne</Text>
+        </View>
+        <View style={styles.gridCard}>
+          <Text style={styles.gridValue}>1</Text>
+          <Text style={styles.gridLabel}>Appel actif</Text>
+        </View>
+      </View>
+
+      {/* CARDS AGENTS */}
+      <Text style={styles.sectionTitle}>🟢 Agents</Text>
+      {agents.map((agent) => (
+        <View key={agent.id} style={styles.card}>
+          <Text style={styles.agentName}>{agent.name}</Text>
+          <Text style={styles.agentRole}>{agent.status}</Text>
+          <View style={{ flexDirection: "row", marginTop: 8 }}>
+            <TouchableOpacity style={styles.callButton} onPress={startCall}>
+              <Text style={styles.callText}>📞 Appel Audio/Video</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      ))}
+
+      {/* VIDEO CALL */}
+      {localStream && (
+        <View style={styles.videoContainer}>
+          <Text style={{ marginBottom: 6 }}>🔴 Appel en cours</Text>
+          <RTCView
+            streamURL={localStream.toURL()}
+            style={styles.localVideo}
+            objectFit="cover"
+          />
+          {remoteStream && (
+            <RTCView
+              streamURL={remoteStream.toURL()}
+              style={styles.remoteVideo}
+              objectFit="cover"
+            />
+          )}
+          <TouchableOpacity style={styles.endButton} onPress={endCall}>
+            <Text style={styles.callText}>🛑 Terminer l'appel</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
+      {/* CHAT */}
+      <Text style={styles.sectionTitle}>💬 Chat agents</Text>
+      <FlatList
+        data={chatMessages}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.chatMessage}>
+            <Text style={{ fontWeight: "600" }}>{item.from}:</Text>
+            <Text>{item.text}</Text>
+          </View>
+        )}
+      />
+      <View style={styles.chatInputRow}>
+        <TextInput
+          style={styles.chatInput}
+          value={messageText}
+          onChangeText={setMessageText}
+          placeholder="Écrire un message"
+        />
+        <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
+          <Text style={{ color: "#fff" }}>➡️</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={{ height: 40 }} />
+    </ScrollView>
+  );
+}
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: "#F3F4F6", padding: 16, paddingTop: 24 },
+
+  header: { backgroundColor: "#1E40AF", borderRadius: 18, padding: 22, marginBottom: 20, elevation: 4 },
+  headerTitle: { color: "#fff", fontSize: 24, fontWeight: "bold" },
+  headerSubtitle: { color: "#DBEAFE", marginTop: 6, fontSize: 14 },
+
+  sectionTitle: { fontSize: 18, fontWeight: "600", marginVertical: 12 },
+
+  grid: { flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", marginBottom: 12 },
+  gridCard: { width: "48%", backgroundColor: "#fff", borderRadius: 16, padding: 18, marginBottom: 12, elevation: 2, alignItems: "center" },
+  gridValue: { fontSize: 22, fontWeight: "bold" },
+  gridLabel: { color: "#6B7280", marginTop: 4 },
+
+  card: { backgroundColor: "#fff", borderRadius: 16, padding: 16, marginBottom: 12, elevation: 2 },
+  agentName: { fontSize: 16, fontWeight: "600" },
+  agentRole: { fontSize: 13, color: "#6B7280", marginTop: 2 },
+  callButton: { backgroundColor: "#2563EB", padding: 10, borderRadius: 12, marginRight: 8 },
+  callText: { color: "#fff", fontWeight: "600" },
+
+  videoContainer: { marginVertical: 12, alignItems: "center" },
+  localVideo: { width: 200, height: 150, backgroundColor: "#000", borderRadius: 12 },
+  remoteVideo: { width: 200, height: 150, backgroundColor: "#000", borderRadius: 12, marginTop: 8 },
+  endButton: { backgroundColor: "#DC2626", padding: 10, borderRadius: 12, marginTop: 8 },
+
+  chatMessage: { padding: 8, backgroundColor: "#fff", borderRadius: 12, marginBottom: 6 },
+  chatInputRow: { flexDirection: "row", alignItems: "center", marginTop: 6 },
+  chatInput: { flex: 1, backgroundColor: "#fff", padding: 10, borderRadius: 12, marginRight: 6 },
+  sendButton: { backgroundColor: "#2563EB", padding: 12, borderRadius: 12, justifyContent: "center", alignItems: "center" },
+});

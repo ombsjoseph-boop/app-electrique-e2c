@@ -1,0 +1,82 @@
+<!-- Modal login/register-->
+  <div id="auth-modal" class="fixed inset-0 hidden z-50" aria-hidden="true">
+    <div id="auth-backdrop" class="fixed inset-0 bg-black/50 transition-opacity"></div>
+
+    <div class="fixed inset-0 flex items-center justify-center p-4">
+      <div id="auth-dialog" role="dialog" aria-modal="true" aria-labelledby="auth-title"
+        class="bg-white rounded-lg shadow-xl max-w-lg w-full transform transition-all duration-200 opacity-0 scale-95">
+        <div class="flex items-center justify-between px-6 py-4 border-b">
+          <div class="flex items-center gap-3">
+            <div class="h-25 w-28 rounded bg-white-600 text-white flex items-center justify-center font-bold" >
+            <img src="./assets/logo.PNG" alt="E²C congo" srcset="">
+            </div>
+            
+          </div>
+            <button id="close-auth" aria-label="Fermer la boîte de dialogue"
+            class="text-gray-500 hover:text-gray-700">✕</button>
+        </div>
+
+        <div class="px-4 py-2">
+          <div class="mb-4" role="tablist" aria-label="Modes d'authentification">
+            <button class="auth-tab inline-block px-3 py-1 rounded-md text-sm" data-mode="login"
+              aria-selected="true">Connexion</button>
+            <button class="auth-tab inline-block px-3 py-1 rounded-md text-sm text-gray-600" data-mode="register"
+              aria-selected="false">Créer un compte</button>
+          </div>
+
+          <form id="auth-form" novalidate>
+            <div id="auth-error" class="text-red-600 text-sm mb-3 hidden" role="alert" aria-live="assertive"></div>
+
+            <div id="auth-login-fields">
+              <label class="block text-sm">Nom
+                <input id="login-email" name="email" type="text" required aria-describedby="err-login-email"
+                  class="mt-1 block w-full border rounded p-2" />
+                <div id="err-login-email" class="text-red-600 text-xs mt-1 hidden">Veuillez saisir un email valide.
+                </div>
+              </label>
+
+              <label class="block text-sm mt-3">Mot de passe
+                <input id="login-password" name="password" type="password" required minlength="6"
+                  aria-describedby="err-login-password" class="mt-1 block w-full border rounded p-2" />
+                <div id="err-login-password" class="text-red-600 text-xs mt-1 hidden">Le mot de passe doit contenir au
+                  moins 6 caractères.</div>
+              </label>
+
+              <div class="mt-4 flex justify-between items-center">
+                <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded">Se connecter</button>
+                <button type="button" id="switch-to-register" class="text-sm text-gray-600 underline">Créer un
+                  compte</button>
+              </div>
+            </div>
+
+            <div id="auth-register-fields" class="hidden">
+              <label class="block text-sm">Nom complet
+                <input id="reg-name" name="name" type="text" required aria-describedby="err-reg-name"
+                  class="mt-1 block w-full border rounded p-2" />
+                <div id="err-reg-name" class="text-red-600 text-xs mt-1 hidden">Veuillez indiquer votre nom complet.
+                </div>
+              </label>
+
+              <label class="block text-sm mt-3">Email
+                <input id="reg-email" name="email" type="email" required aria-describedby="err-reg-email"
+                  class="mt-1 block w-full border rounded p-2" />
+                <div id="err-reg-email" class="text-red-600 text-xs mt-1 hidden">Veuillez saisir un email valide.</div>
+              </label>
+
+              <label class="block text-sm mt-3">Mot de passe
+                <input id="reg-password" name="password" type="password" required minlength="6"
+                  aria-describedby="err-reg-password" class="mt-1 block w-full border rounded p-2" />
+                <div id="err-reg-password" class="text-red-600 text-xs mt-1 hidden">Le mot de passe doit contenir au
+                  moins 6 caractères.</div>
+              </label>
+
+              <div class="mt-4 flex justify-between items-center">
+                <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded">Créer un compte</button>
+                <button type="button" id="switch-to-login" class="text-sm text-gray-600 underline">Connexion</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

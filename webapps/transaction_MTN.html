@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% include 'include/title.html' %}
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <!-- Loader circulaire avec icône E²C -->
+  <div class="fixed inset-0 flex items-center justify-center z-[9999] bg-gradient-to-br from-white to-slate-100 transition-opacity duration-2000" id="loader">
+    <div class="text-center">
+      <!-- Cercle animé avec logo au centre -->
+      <div class="relative flex justify-center items-center mb-5">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-24 h-24 loader-svg">
+          <circle cx="50" cy="50" r="50" stroke-width="3" stroke-linecap="round" class="loader-circle"/>
+        </svg>
+        <!-- Logo E²C au centre du cercle -->
+        <img src="./assets/logo.PNG" alt="E2C" class="absolute w-22 h-12 animate-pulse">
+      </div>
+      <!-- Texte -->
+      
+    </div>
+  </div>
+    <a href="#" class="scroll-top" id="scroll-top">
+    <i class="fa-sharp fa-thin fa-up"></i>
+  </a>
+
+  <!-- Carrousel principal -->
+  <section id="hero-carousel" class="mb-8 w-full">
+    {% include 'include/header.html' %}
+    <div class="relative w-full h-[420px] md:h-[640px] overflow-hidden">
+
+      <!-- En-tête superposé -->
+      
+
+      <div class="relative w-full h-[420px] md:h-[640px] overflow-hidden">
+        <!-- Diapositives -->
+        <div class="absolute inset-0 transition-opacity duration-700" data-slide="0"
+          style="opacity:1;background-image:url('./assets/payement_img.png');background-size:cover;background-position:center;">
+        </div>
+        <div class="absolute inset-0 transition-opacity duration-700" data-slide="1"
+          style="opacity:0;background-image:url('./assets/transaction_img.png');background-size:cover;background-position:center;">
+        </div>
+
+        <!-- Superposition -->
+        <div class="absolute inset-0 bg-black/30"></div>
+
+        <div
+          class="relative z-10 max-w-4xl mx-auto h-full flex flex-col items-center justify-center text-center px-4 text-white"
+          id="contenu">
+          <h1 id="hero-title" class="text-3xl md:text-5xl font-extrabold" id="chars">Payer votre facture en ligne et securiser</h1>
+          <p id="hero-sub" class="mt-4 text-sm md:text-lg max-w-2xl">Payer vos factures de manière sécurisée et rapide via notre plateforme en ligne.</p>
+          
+        </div>
+
+        </div>
+
+        <!-- Contrôles -->
+        <button id="hero-prev" aria-label="Précédent"
+          class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/30 rounded-full p-2 hover:bg-white/50">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button id="hero-next" aria-label="Suivant"
+          class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/30 rounded-full p-2 hover:bg-white/50">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+
+        <!-- Indicators -->
+        <div class="absolute left-1/2 -translate-x-1/2 bottom-6 z-20 flex items-center gap-2">
+          <button class="w-3 h-3 rounded-full bg-white/50" data-indicator="0" aria-label="Slide 1"></button>
+          <button class="w-3 h-3 rounded-full bg-white/30" data-indicator="1" aria-label="Slide 2"></button>
+          
+        </div>
+      </div>
+      
+    </div>
+
+  
+    <!-- Contenu -->
+     
+
+    <section class="py-12 px-4 md:px-8 lg:px-16">
+        <div class="flex justify-center items-center min-h-[600px]">
+          <div class="bg-white/95 backdrop-blur-sm rounded-lg shadow-2xl p-8 max-w-4xl w-full">
+            <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">
+              <i class="fas fa-exchange-alt text-red-600 mr-3"></i>Effectuer une Transaction
+            </h1>
+
+            <form id="transactionForm" class="space-y-6" onsubmit="handleTransaction(event)">
+              <!-- Sélection du type de transaction -->
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-3">Type de Transaction</label>
+                <div class="grid grid-cols-2 gap-4">
+                  <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:bg-blue-50 transition" onclick="selectPaymentMethod('mtn')">
+                    <input type="radio" name="paymentMethod" value="mtn" class="w-4 h-4 text-blue-600" required>
+                    <div class="ml-3">
+                      <i class="fas fa-mobile text-yellow-500 text-xl mb-2"></i>
+                      <span class="font-semibold text-gray-700">MTN Mobile Money</span>
+                    </div>
+                  </label>
+                  <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:bg-green-50 transition" onclick="selectPaymentMethod('bank')">
+                    <input type="radio" name="paymentMethod" value="bank" class="w-4 h-4 text-green-600" required>
+                    <div class="ml-3">
+                      <i class="fas fa-university text-green-600 text-xl mb-2"></i>
+                      <span class="font-semibold text-gray-700">Compte Bancaire</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- SECTION MTN MOBILE MONEY -->
+              <div id="mtnSection" class="hidden space-y-4 p-4 bg-yellow-50 rounded-lg border-2 border-yellow-200">
+                <h3 class="font-bold text-lg text-yellow-800 mb-4">
+                  <i class="fas fa-mobile mr-2"></i>Informations MTN Mobile Money
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Nom Complet</label>
+                    <input type="text" id="mtnName" name="mtnName" placeholder="Ex: Jean Dupont"
+                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                      pattern="^[a-zA-ZÀ-ÿ\s]{3,50}$" title="Minimum 3 caractères, lettres et espaces seulement">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Numéro MTN *</label>
+                    <input type="tel" id="mtnNumber" name="mtnNumber" placeholder="Ex: 07 8123 4567" required
+                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                      pattern="^\+?243[0-9]{9}$|^0[0-9]{9}$" title="Format: 07 ou +243 suivi de 9 chiffres">
+                    <small class="text-gray-500">Format: 07 8123 4567 ou +243 78 1234 567</small>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Montant (USD) *</label>
+                    <input type="number" id="mtnAmount" name="mtnAmount" placeholder="0.00" step="0.01" min="0.01" required
+                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                      title="Montant minimum: $0.01">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Code PIN MTN *</label>
+                    <input type="password" id="mtnPin" name="mtnPin" placeholder="****" maxlength="4" required
+                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                      pattern="^[0-9]{4}$" title="Le code PIN doit contenir exactement 4 chiffres">
+                    <small class="text-gray-500">4 chiffres de sécurité</small>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">Référence de Transaction (optionnel)</label>
+                  <input type="text" id="mtnReference" name="mtnReference" placeholder="Ex: FACT-2024-001"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                </div>
+              </div>
+
+              <!-- SECTION COMPTE BANCAIRE -->
+              <div id="bankSection" class="hidden space-y-4 p-4 bg-green-50 rounded-lg border-2 border-green-200">
+                <h3 class="font-bold text-lg text-green-800 mb-4">
+                  <i class="fas fa-university mr-2"></i>Informations Compte Bancaire
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Nom Titulaire *</label>
+                    <input type="text" id="bankName" name="bankName" placeholder="Ex: Jean Dupont"
+                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      pattern="^[a-zA-ZÀ-ÿ\s]{3,50}$" title="Minimum 3 caractères, lettres et espaces seulement">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Banque *</label>
+                    <select id="bankName_select" name="bankName_select"
+                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                      <option value="">-- Sélectionner une banque --</option>
+                      <option value="BCDC">Banque de la Cité (BCDC)</option>
+                      <option value="ECOBANK">Ecobank</option>
+                      <option value="BGFI">BGFI Bank</option>
+                      <option value="BCC">Banque Commerciale Congolaise (BCC)</option>
+                      <option value="AFRILAND">Afriland First Bank</option>
+                      <option value="FINCA">FINCA Congo</option>
+                      <option value="SOCOBANK">SOCOBANK</option>
+                      <option value="UBA">UBA Congo</option>
+                      <option value="Autre">Autre banque</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Numéro de Compte *</label>
+                    <input type="text" id="bankAccount" name="bankAccount" placeholder="Ex: 1234567890"
+                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      pattern="^[0-9]{10,20}$" title="Le numéro de compte doit contenir 10 à 20 chiffres">
+                    <small class="text-gray-500">10-20 chiffres sans espaces</small>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Code SWIFT (optionnel)</label>
+                    <input type="text" id="bankSwift" name="bankSwift" placeholder="Ex: BCDCDRCX"
+                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      pattern="^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$|^$" title="Format SWIFT invalide">
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Montant (USD) *</label>
+                    <input type="number" id="bankAmount" name="bankAmount" placeholder="0.00" step="0.01" min="0.01" required
+                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      title="Montant minimum: $0.01">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Clé Bancaire/IBAN (optionnel)</label>
+                    <input type="text" id="bankIban" name="bankIban" placeholder="Ex: CD1234567890"
+                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">Référence de Transaction (optionnel)</label>
+                  <input type="text" id="bankReference" name="bankReference" placeholder="Ex: FACT-2024-001"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                </div>
+              </div>
+
+              <!-- INFORMATIONS COMMUNES -->
+              <div class="space-y-4 p-4 bg-blue-50 rounded-lg border-2 border-blue-200">
+                <h3 class="font-bold text-lg text-blue-800 mb-4">
+                  <i class="fas fa-file-invoice mr-2"></i>Informations sur la Facture
+                </h3>
+
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">Numéro de Facture *</label>
+                  <input type="text" id="invoiceNumber" name="invoiceNumber" placeholder="Ex: FACT-2024-001" required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">ID Utilisateur *</label>
+                    <input type="number" id="userId" name="userId" placeholder="ID utilisateur" min="1" required
+                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Date de Paiement *</label>
+                    <input type="date" id="paymentDate" name="paymentDate" required
+                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">Description (optionnel)</label>
+                  <textarea id="description" name="description" rows="3" placeholder="Détails supplémentaires..."
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                </div>
+              </div>
+
+              <!-- Conditions d'acceptation -->
+              <div class="flex items-center p-4 bg-gray-100 rounded-lg">
+                <input type="checkbox" id="terms" name="terms" required class="w-4 h-4 text-red-600">
+                <label for="terms" class="ml-3 text-sm text-gray-700">
+                  J'accepte les conditions de paiement et je confirme que toutes les informations sont exactes.
+                </label>
+              </div>
+
+              <!-- Boutons -->
+              <div class="flex gap-4 pt-4">
+                <button type="reset"
+                  class="flex-1 px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg transition duration-200">
+                  <i class="fas fa-redo mr-2"></i>Réinitialiser
+                </button>
+                <button type="submit"
+                  class="flex-1 px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition duration-200">
+                  <i class="fas fa-check-circle mr-2"></i>Valider la Transaction
+                </button>
+              </div>
+
+              <!-- Message d'erreur -->
+              <div id="errorMessage" class="hidden p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+                <i class="fas fa-exclamation-circle mr-2"></i><span id="errorText"></span>
+              </div>
+
+              <!-- Message de succès -->
+              <div id="successMessage" class="hidden p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                <i class="fas fa-check-circle mr-2"></i>Transaction validée avec succès!
+              </div>
+            </form>
+          </div>
+        </div>
+        </section>
+  </section>
+  {% include 'include/form.html' %}
+  {% include 'include/footer.html' %}
+
+
+  <script src="/js/main.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/js/jauge.js"></script>
+
+  
+   
+</body>
+</html>
