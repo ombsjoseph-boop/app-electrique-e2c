@@ -1,0 +1,27 @@
+# ---- Backend Railway (Flask) : PAS de Tkinter ni pywin32 ici ----
+Flask==3.1.3
+Werkzeug==3.1.8
+Jinja2==3.1.6
+MarkupSafe==3.0.3
+itsdangerous==2.2.0
+blinker==1.9.0
+click==8.5.0
+mysql-connector-python==26.7.0
+requests==2.34.2
+certifi==2026.7.22
+charset-normalizer==3.5.1
+idna==3.19
+urllib3==2.7.0
+python-dotenv
+gunicorn
+
+# Nécessaires seulement si vous déployez aussi dashboard.py (tableau de bord web)
+Flask-SocketIO==5.6.1
+python-socketio==5.16.4
+python-engineio==4.14.0
+simple-websocket==1.1.0
+bidict==0.23.1
+h11==0.16.0
+wsproto==1.3.2
+bcrypt==5.0.0
+packaging==26.3

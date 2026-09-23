@@ -2,11 +2,22 @@ import mysql.connector
 import os
 from datetime import datetime
 
+# Charge un fichier .env s'il existe (utile sur le PC de l'admin).
+# Sur Railway, les variables viennent directement du service.
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
+# Les valeurs par défaut gardent votre installation locale (XAMPP) fonctionnelle.
 DB_CONFIG = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': '',
-    'database': 'app'
+    'host': os.environ.get('DB_HOST', 'localhost'),
+    'port': int(os.environ.get('DB_PORT', 3306)),
+    'user': os.environ.get('DB_USER', 'root'),
+    'password': os.environ.get('DB_PASSWORD', ''),
+    'database': os.environ.get('DB_NAME', 'app'),
+    'connection_timeout': 10,
 }
 
 def init_db():

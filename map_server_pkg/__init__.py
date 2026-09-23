@@ -17,27 +17,24 @@ MAP_SERVER_THREAD = None
 MAP_SERVER_PORT = 5001
 
 
-def start_map_server(port: int = None):
-    """Démarrer le serveur de carte en arrière-plan.
+# Dossier racine du projet (là où se trouvent db.py, webapps/, etc.)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-    Si `port` est fourni, il remplacera la valeur par défaut `MAP_SERVER_PORT`.
-    Retourne l'instance Flask.
+
+def create_app():
+    """Construit l'application Flask SANS la lancer.
+
+    - En production (Railway) : gunicorn l'utilise via wsgi.py
+    - En local (Tkinter)      : start_map_server() la lance dans un thread
     """
-    global MAP_SERVER, MAP_SERVER_THREAD, MAP_SERVER_PORT
-    if MAP_SERVER is not None:
-        return
-    if port is not None:
-        try:
-            MAP_SERVER_PORT = int(port)
-        except Exception:
-            pass
+    global MAP_SERVER
     # Vérifier que les tables de la BD existent avant de démarrer le serveur
     try:
         init_db()
     except Exception:
         pass
 
-    static_folder = os.path.join(os.getcwd(), 'webapps')
+    static_folder = os.path.join(BASE_DIR, 'webapps')
     # Utiliser le dossier `webapps` comme dossier de templates afin que Jinja traite
     # les `{% include %}` présents dans les pages HTML. Ne pas laisser Flask
     # gérer automatiquement les fichiers statiques au niveau racine (static_url_path='')
@@ -152,6 +149,10 @@ def start_map_server(port: int = None):
         template = templates.GOOGLE_MAP_HTML if api_key else templates.LEAFLET_MAP_HTML
         return render_template_string(template, api_key=api_key or '', user_id=user_id, server_port=MAP_SERVER_PORT)
 
+    @app.route('/health')
+    def health():
+        return {'status': 'ok'}
+
     # Enregistrer les groupes de routes fonctionnelles
     register_routes_markers(app)
     register_routes_bills(app)
@@ -203,6 +204,22 @@ def start_map_server(port: int = None):
                 # Pour les autres fichiers (CSS, JS, images), servir statiquement
                 return send_from_directory(static_folder, filename)
         return abort(404)
+
+    return app
+
+
+def start_map_server(port: int = None):
+    """Démarrer le serveur de carte en arrière-plan (usage local / Tkinter)."""
+    global MAP_SERVER, MAP_SERVER_THREAD, MAP_SERVER_PORT
+    if MAP_SERVER is not None:
+        return MAP_SERVER
+    if port is not None:
+        try:
+            MAP_SERVER_PORT = int(port)
+        except Exception:
+            pass
+
+    app = create_app()
 
     def run_app():
         try:
