@@ -150,7 +150,7 @@ class DashboardFrame(tb.Frame):
 
         tb.Button(buttons_frame, text="🗑️ Effacer",
                   bootstyle="secondary", width=15,
-                  command=self.clear_form).pack(side=LEFT, padx=(0, 12))
+                  command=self.clear_form).pack(side=LEFT,padx=(0, 12))
 
         # Panneau droit - Liste des zones
         list_panel = tb.Frame(main_container, bootstyle="light", padding=25)
