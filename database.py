@@ -1,8 +1,9 @@
 from config import DB_CONFIG
 import mysql.connector
 import requests
+import os
 
-
+SERVER_BASE = os.environ.get('API_URL', 'http://127.0.0.1:5001')
 def init_db():
     conn = mysql.connector.connect(**DB_CONFIG)
     c = conn.cursor()
@@ -279,7 +280,7 @@ def save_bill(user_identifier, amount=None, due_date=None, reference=None, send_
                 payload['due_date'] = due_date
             if reference:
                 payload['reference'] = reference
-            _requests.post('http://127.0.0.1:5001/api/bills/create', json=payload, timeout=5)
+            _requests.post(f'{SERVER_BASE}/api/bills/create', json=payload, timeout=5)
         except Exception:
             pass
 
