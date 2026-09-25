@@ -7,6 +7,6 @@ from ttkbootstrap.constants import LEFT, Y, X, BOTH, END, W, CENTER, TOP, RIGHT
 import tkintermapview
 import requests
 from db import DB_CONFIG   # ← source unique : lit DB_HOST, DB_PORT... depuis .env / variables
-
+from tkinter import messagebox
 # Secret token that the desktop admin can include when creating/modifying markers.
 MAP_ADMIN_SECRET = 'please-change-me'

@@ -1,4 +1,4 @@
-from config import tb, BOTH
+from config import tb, BOTH, LEFT, Y
 from sidebar import Sidebar
 from login import LoginFrame
 from register import RegisterFrame
@@ -7,8 +7,6 @@ from map_frame import MapFrame
 from database import init_db
 from map_server_pkg import start_map_server
 
-
-start_map_server
 
 class App(tb.Window):
     def __init__(self):
@@ -26,7 +24,7 @@ class App(tb.Window):
         self.frames = {}
         for F, name in [
             (LoginFrame, "Login"),
-            
+
             (DashboardFrame, "Dashboard"),
             (MapFrame, "Map")
         ]:
@@ -39,6 +37,11 @@ class App(tb.Window):
     def show_frame(self, name):
         if name in ("Dashboard", "Map") and not self.sidebar:
             self.sidebar = Sidebar(self, self)
+            # before=self.container : insère la sidebar AVANT le container dans
+            # l'ordre d'empilement, pour qu'elle obtienne son espace à gauche
+            # au lieu que le container (packé en premier, fill=BOTH+expand)
+            # occupe déjà toute la fenêtre et ne lui laisse aucune place.
+            self.sidebar.pack(side=LEFT, fill=Y, before=self.container)
 
         self.frames[name].tkraise()
 
@@ -69,5 +72,3 @@ if __name__ == "__main__":
     start_map_server()
     app = App()
     app.mainloop()
-    
-
