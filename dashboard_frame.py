@@ -60,7 +60,7 @@ class DashboardFrame(tb.Frame):
 
     def create_zones_tab(self):
         tab = tb.Frame(self.notebook, padding=30)
-        self.notebook.add(tab, text="📍 Gestion des Zones")
+        self.notebook.add(tab, text="Gestion des Zones")
 
         # Titre de l'onglet
         tb.Label(tab, text="Gestion des Zones Électriques",
@@ -74,7 +74,7 @@ class DashboardFrame(tb.Frame):
         form_panel = tb.Frame(main_container, bootstyle="light", padding=25)
         form_panel.pack(side=LEFT, fill=Y, padx=(0, 15))
 
-        tb.Label(form_panel, text="📝 Nouvelle Zone Électrique",
+        tb.Label(form_panel, text="Nouvelle Zone Électrique",
                  font=("Segoe UI", 14, "bold")).pack(anchor=W, pady=(0, 20))
 
         # Cadre pour le formulaire
@@ -85,11 +85,11 @@ class DashboardFrame(tb.Frame):
         row1 = tb.Frame(form_frame)
         row1.pack(fill=X, pady=8)
 
-        tb.Label(row1, text="🏷️ Nom:").pack(side=LEFT, padx=(0, 8))
+        tb.Label(row1, text="Nom:").pack(side=LEFT, padx=(0, 8))
         self.zone_name = tb.Entry(row1, width=25, font=("Segoe UI", 10))
         self.zone_name.pack(side=LEFT, padx=(0, 20))
 
-        tb.Label(row1, text="🔧 Type:").pack(side=LEFT, padx=(0, 8))
+        tb.Label(row1, text="Type:").pack(side=LEFT, padx=(0, 8))
         self.zone_type = tb.Combobox(row1,
                                      values=["Réseau HT", "Poste de transformation",
                                              "Ligne BT", "Branchement", "Autre"],
@@ -100,15 +100,15 @@ class DashboardFrame(tb.Frame):
         row2 = tb.Frame(form_frame)
         row2.pack(fill=X, pady=8)
 
-        tb.Label(row2, text="📍 Lat:").pack(side=LEFT, padx=(0, 8))
+        tb.Label(row2, text=" Lat:").pack(side=LEFT, padx=(0, 8))
         self.zone_lat = tb.Entry(row2, width=12, font=("Segoe UI", 10))
         self.zone_lat.pack(side=LEFT, padx=(0, 12))
 
-        tb.Label(row2, text="📍 Lng:").pack(side=LEFT, padx=(0, 8))
+        tb.Label(row2, text=" Lng:").pack(side=LEFT, padx=(0, 8))
         self.zone_lng = tb.Entry(row2, width=12, font=("Segoe UI", 10))
         self.zone_lng.pack(side=LEFT, padx=(0, 20))
 
-        tb.Label(row2, text="🏙️ Ville:").pack(side=LEFT, padx=(0, 8))
+        tb.Label(row2, text=" Ville:").pack(side=LEFT, padx=(0, 8))
         self.zone_city = tb.Entry(row2, width=15, font=("Segoe UI", 10))
         self.zone_city.pack(side=LEFT)
 
@@ -116,14 +116,14 @@ class DashboardFrame(tb.Frame):
         row3 = tb.Frame(form_frame)
         row3.pack(fill=X, pady=8)
 
-        tb.Label(row3, text="⚡ Tension (V):").pack(side=LEFT, padx=(0, 8))
+        tb.Label(row3, text=" Tension (V):").pack(side=LEFT, padx=(0, 8))
         self.zone_voltage = tb.Entry(row3, width=12, font=("Segoe UI", 10))
         self.zone_voltage.pack(side=LEFT, padx=(0, 20))
 
-        tb.Label(row3, text="📊 État:").pack(side=LEFT, padx=(0, 8))
+        tb.Label(row3, text=" État:").pack(side=LEFT, padx=(0, 8))
         self.zone_status = tb.Combobox(row3,
-                                       values=["✅ Fonctionnel", "🔧 En maintenance",
-                                               "❌ Hors service", "🔨 À réparer"],
+                                       values=[" Fonctionnel", " En maintenance",
+                                               " Hors service", " À réparer"],
                                        width=15, font=("Segoe UI", 10))
         self.zone_status.pack(side=LEFT)
 
@@ -131,7 +131,7 @@ class DashboardFrame(tb.Frame):
         desc_frame = tb.Frame(form_frame)
         desc_frame.pack(fill=X, pady=15)
 
-        tb.Label(desc_frame, text="📝 Description/Commentaires:").pack(anchor=W, pady=(0, 5))
+        tb.Label(desc_frame, text="Description/Commentaires:").pack(anchor=W, pady=(0, 5))
         self.zone_description = tb.Text(desc_frame, height=4, width=50,
                                        font=("Segoe UI", 10))
         self.zone_description.pack()
@@ -140,15 +140,15 @@ class DashboardFrame(tb.Frame):
         buttons_frame = tb.Frame(form_panel)
         buttons_frame.pack(fill=X, pady=20)
 
-        tb.Button(buttons_frame, text="💾 Enregistrer",
+        tb.Button(buttons_frame, text="Enregistrer",
                   bootstyle="success", width=15,
                   command=self.save_electric_zone).pack(side=LEFT, padx=(0, 12))
 
-        tb.Button(buttons_frame, text="📤 Envoyer Rapport",
+        tb.Button(buttons_frame, text=" Envoyer Rapport",
                   bootstyle="info", width=15,
                   command=self.send_electric_report).pack(side=LEFT, padx=(0, 12))
 
-        tb.Button(buttons_frame, text="🗑️ Effacer",
+        tb.Button(buttons_frame, text=" Effacer",
                   bootstyle="secondary", width=15,
                   command=self.clear_form).pack(side=LEFT,padx=(0, 12))
 
@@ -156,7 +156,7 @@ class DashboardFrame(tb.Frame):
         list_panel = tb.Frame(main_container, bootstyle="light", padding=25)
         list_panel.pack(side=RIGHT, fill=BOTH, expand=True)
 
-        tb.Label(list_panel, text="📊 Zones Enregistrées",
+        tb.Label(list_panel, text=" Zones Enregistrées",
                  font=("Segoe UI", 14, "bold")).pack(anchor=W, pady=(0, 20))
 
         # Treeview pour la liste
@@ -195,21 +195,21 @@ class DashboardFrame(tb.Frame):
         list_buttons = tb.Frame(list_panel)
         list_buttons.pack(fill=X, pady=20)
 
-        tb.Button(list_buttons, text="🔄 Actualiser",
+        tb.Button(list_buttons, text="Actualiser",
                   bootstyle="secondary",
                   command=self.refresh_zones).pack(side=LEFT, padx=(0, 12))
 
-        tb.Button(list_buttons, text="📋 Rapport",
+        tb.Button(list_buttons, text="Rapport",
                   bootstyle="primary",
                   command=self.generate_report).pack(side=LEFT, padx=(0, 12))
 
-        tb.Button(list_buttons, text="🗺️ Voir sur Carte",
+        tb.Button(list_buttons, text="Voir sur Carte",
                   bootstyle="info",
                   command=lambda: self.notebook.select(1)).pack(side=LEFT)
 
     def create_map_tab(self):
         tab = tb.Frame(self.notebook, padding=30)
-        self.notebook.add(tab, text="🗺️ Carte Interactive")
+        self.notebook.add(tab, text="Carte Interactive")
 
         # Titre
         tb.Label(tab, text="Carte des Zones Électriques",
@@ -224,14 +224,14 @@ class DashboardFrame(tb.Frame):
         control_panel.pack(side=LEFT, fill=Y, padx=(0, 15))
         control_panel.pack_propagate(False)
 
-        tb.Label(control_panel, text="🎛️ Contrôles",
+        tb.Label(control_panel, text="Contrôles",
                  font=("Segoe UI", 14, "bold")).pack(anchor=W, pady=(0, 20))
 
         # Liste des zones avec checkboxes
         zones_list_frame = tb.Frame(control_panel)
         zones_list_frame.pack(fill=BOTH, expand=True)
 
-        tb.Label(zones_list_frame, text="📍 Zones à afficher:",
+        tb.Label(zones_list_frame, text=" Zones à afficher:",
                  font=("Segoe UI", 11, "bold")).pack(anchor=W, pady=(0, 10))
 
         # Scrollable frame pour les checkboxes
@@ -257,15 +257,15 @@ class DashboardFrame(tb.Frame):
         actions_frame = tb.Frame(control_panel)
         actions_frame.pack(fill=X, pady=5)
 
-        tb.Button(actions_frame, text="✅ Tout cocher",
+        tb.Button(actions_frame, text=" Tout cocher",
                   bootstyle="success", width=12,
                   command=self.check_all_zones).pack(pady=3)
 
-        tb.Button(actions_frame, text="❌ Tout décocher",
+        tb.Button(actions_frame, text=" Tout décocher",
                   bootstyle="danger", width=12,
                   command=self.uncheck_all_zones).pack(pady=3)
 
-        tb.Button(actions_frame, text="📤 Envoyer Sélection",
+        tb.Button(actions_frame, text=" Envoyer Sélection",
                   bootstyle="info", width=12,
                   command=self.send_selected_zones).pack(pady=3)
         
@@ -289,7 +289,7 @@ class DashboardFrame(tb.Frame):
         self.update_map_markers()
 
         # Événement de clic sur la carte pour ajouter une zone
-        self.map_widget.add_right_click_menu_command(label="📍 Ajouter Zone Électrique",
+        self.map_widget.add_right_click_menu_command(label="Ajouter Zone Électrique",
                                                    command=self.add_zone_from_map,
                                                    pass_coords=True)
 
@@ -301,27 +301,27 @@ class DashboardFrame(tb.Frame):
         nav_buttons1 = tb.Frame(map_buttons)
         nav_buttons1.pack(fill=X, pady=2)
 
-        tb.Button(nav_buttons1, text="📍 Centrer Brazzavile",
+        tb.Button(nav_buttons1, text="Centrer Brazzavile",
                   bootstyle="primary",
                   command=self.center_map_Brazzaville).pack(side=LEFT, padx=(0, 8))
 
-        tb.Button(nav_buttons1, text="🔍 +",
+        tb.Button(nav_buttons1, text=" +",
                   bootstyle="secondary",
                   command=self.zoom_in).pack(side=LEFT, padx=(0, 8))
 
-        tb.Button(nav_buttons1, text="🔍 -",
+        tb.Button(nav_buttons1, text=" -",
                   bootstyle="secondary",
                   command=self.zoom_out).pack(side=LEFT, padx=(0, 8))
 
-        tb.Button(nav_buttons1, text="🔄 Actualiser",
+        tb.Button(nav_buttons1, text=" Actualiser",
                   bootstyle="info",
                   command=self.update_map_markers).pack(side=LEFT, padx=(0, 8))
 
-        tb.Button(nav_buttons1, text="🗺️ Envoyer Carte",
+        tb.Button(nav_buttons1, text=" Envoyer Carte",
                   bootstyle="warning",
                   command=self.send_map_image).pack(side=LEFT, padx=(0, 8))
 
-        tb.Button(nav_buttons1, text="🗑️ Effacer Marqueurs",
+        tb.Button(nav_buttons1, text=" Effacer Marqueurs",
                   bootstyle="danger",
                   command=self.clear_all_markers).pack(side=LEFT)
 
@@ -332,25 +332,25 @@ class DashboardFrame(tb.Frame):
         tb.Label(add_buttons, text="⚡ Ajouter Zone:",
                  font=("Segoe UI", 9, "bold")).pack(side=LEFT, padx=(0, 8))
 
-        tb.Button(add_buttons, text="🏭 Poste",
+        tb.Button(add_buttons, text=" Poste",
                   bootstyle="success", width=8,
                   command=lambda: self.quick_add_zone("Poste de transformation")).pack(side=LEFT, padx=(0, 4))
 
-        tb.Button(add_buttons, text="⚡ Ligne BT",
+        tb.Button(add_buttons, text=" Ligne BT",
                   bootstyle="info", width=8,
                   command=lambda: self.quick_add_zone("Ligne BT")).pack(side=LEFT, padx=(0, 4))
 
-        tb.Button(add_buttons, text="🔌 Branchement",
+        tb.Button(add_buttons, text=" Branchement",
                   bootstyle="warning", width=10,
                   command=lambda: self.quick_add_zone("Branchement")).pack(side=LEFT, padx=(0, 4))
 
-        tb.Button(add_buttons, text="📍 Autre",
+        tb.Button(add_buttons, text=" Autre",
                   bootstyle="secondary", width=6,
                   command=lambda: self.quick_add_zone("Autre")).pack(side=LEFT)
 
     def create_reports_tab(self):
         tab = tb.Frame(self.notebook, padding=30)
-        self.notebook.add(tab, text="📊 Rapports")
+        self.notebook.add(tab, text=" Rapports")
 
         tb.Label(tab, text="Rapports et Statistiques",
                  font=("Segoe UI", 18, "bold")).pack(anchor=W, pady=(0, 30))
@@ -363,7 +363,7 @@ class DashboardFrame(tb.Frame):
         stats_frame = tb.Frame(reports_container, bootstyle="light", padding=25)
         stats_frame.pack(fill=X, pady=(0, 25))
 
-        tb.Label(stats_frame, text="📈 Statistiques Générales",
+        tb.Label(stats_frame, text=" Statistiques Générales",
                  font=("Segoe UI", 14, "bold")).pack(anchor=W, pady=(0, 20))
 
         self.stats_text = tb.Text(stats_frame, height=8, width=80,
@@ -374,15 +374,15 @@ class DashboardFrame(tb.Frame):
         report_buttons = tb.Frame(reports_container)
         report_buttons.pack(fill=X, pady=15)
 
-        tb.Button(report_buttons, text="📊 Générer Rapport",
+        tb.Button(report_buttons, text=" Générer Rapport",
                   bootstyle="primary",
                   command=self.generate_detailed_report).pack(side=LEFT, padx=(0, 12))
 
-        tb.Button(report_buttons, text="💾 Exporter CSV",
+        tb.Button(report_buttons, text=" Exporter CSV",
                   bootstyle="success",
                   command=self.export_csv).pack(side=LEFT, padx=(0, 12))
 
-        tb.Button(report_buttons, text="📧 Envoyer Rapport",
+        tb.Button(report_buttons, text=" Envoyer Rapport",
                   bootstyle="info",
                   command=self.send_report_email).pack(side=LEFT)
 
@@ -399,7 +399,7 @@ class DashboardFrame(tb.Frame):
 
     def create_agents_tab(self):
         tab = tb.Frame(self.notebook, padding=30)
-        self.notebook.add(tab, text="🧑‍🔧 Agents")
+        self.notebook.add(tab, text="Agents")
 
         tb.Label(tab, text="Gestion des Agents",
                  font=("Segoe UI", 18, "bold")).pack(anchor=W, pady=(0, 30))
@@ -411,36 +411,36 @@ class DashboardFrame(tb.Frame):
         form_panel = tb.Frame(main_container, bootstyle="light", padding=25)
         form_panel.pack(side=LEFT, fill=Y, padx=(0, 15))
 
-        tb.Label(form_panel, text="➕ Nouvel Agent",
+        tb.Label(form_panel, text=" Nouvel Agent",
                  font=("Segoe UI", 14, "bold")).pack(anchor=W, pady=(0, 20))
 
         form_frame = tb.Frame(form_panel)
         form_frame.pack(fill=X, pady=10)
 
-        tb.Label(form_frame, text="🏷️ Nom:").pack(anchor=W, pady=(0, 4))
+        tb.Label(form_frame, text=" Nom:").pack(anchor=W, pady=(0, 4))
         self.agent_nom = tb.Entry(form_frame, width=30, font=("Segoe UI", 10))
         self.agent_nom.pack(fill=X, pady=(0, 12))
 
-        tb.Label(form_frame, text="✉️ Email:").pack(anchor=W, pady=(0, 4))
+        tb.Label(form_frame, text=" Email:").pack(anchor=W, pady=(0, 4))
         self.agent_email = tb.Entry(form_frame, width=30, font=("Segoe UI", 10))
         self.agent_email.pack(fill=X, pady=(0, 12))
 
-        tb.Label(form_frame, text="🔒 Mot de passe:").pack(anchor=W, pady=(0, 4))
+        tb.Label(form_frame, text=" Mot de passe:").pack(anchor=W, pady=(0, 4))
         self.agent_password = tb.Entry(form_frame, width=30, font=("Segoe UI", 10), show="•")
         self.agent_password.pack(fill=X, pady=(0, 12))
 
-        tb.Label(form_frame, text="🔒 Confirmer le mot de passe:").pack(anchor=W, pady=(0, 4))
+        tb.Label(form_frame, text=" Confirmer le mot de passe:").pack(anchor=W, pady=(0, 4))
         self.agent_password_confirm = tb.Entry(form_frame, width=30, font=("Segoe UI", 10), show="•")
         self.agent_password_confirm.pack(fill=X, pady=(0, 12))
 
         buttons_frame = tb.Frame(form_panel)
         buttons_frame.pack(fill=X, pady=15)
 
-        tb.Button(buttons_frame, text="💾 Créer l'agent",
+        tb.Button(buttons_frame, text=" Créer l'agent",
                   bootstyle="success", width=15,
                   command=self.create_agent).pack(side=LEFT, padx=(0, 12))
 
-        tb.Button(buttons_frame, text="🗑️ Effacer",
+        tb.Button(buttons_frame, text=" Effacer",
                   bootstyle="secondary", width=10,
                   command=self.clear_agent_form).pack(side=LEFT)
 
@@ -451,26 +451,26 @@ class DashboardFrame(tb.Frame):
         header_frame = tb.Frame(list_panel)
         header_frame.pack(fill=X, pady=(0, 15))
 
-        tb.Label(header_frame, text="👥 Agents Enregistrés",
+        tb.Label(header_frame, text=" Agents Enregistrés",
                  font=("Segoe UI", 14, "bold")).pack(side=LEFT)
 
-        tb.Button(header_frame, text="🔄 Actualiser",
+        tb.Button(header_frame, text=" Actualiser",
                   bootstyle="secondary",
                   command=self.refresh_agents).pack(side=RIGHT)
 
-        tb.Button(header_frame, text="🚫 Activer / Désactiver",
+        tb.Button(header_frame, text=" Activer / Désactiver",
                   bootstyle="warning",
                   command=self.toggle_selected_agent_status).pack(side=RIGHT, padx=(0, 10))
 
-        tb.Button(header_frame, text="✏️ Modifier",
+        tb.Button(header_frame, text="Modifier",
                   bootstyle="secondary",
                   command=self.open_edit_agent_popup).pack(side=RIGHT, padx=(0, 10))
 
-        tb.Button(header_frame, text="📋 Fiche & Historique",
+        tb.Button(header_frame, text="Fiche & Historique",
                   bootstyle="info",
                   command=self.open_selected_agent_details).pack(side=RIGHT, padx=(0, 10))
 
-        tb.Label(list_panel, text="💡 Double-cliquez sur un agent (ou sélectionnez-le puis utilisez les boutons ci-dessus)",
+        tb.Label(list_panel, text="Double-cliquez sur un agent (ou sélectionnez-le puis utilisez les boutons ci-dessus)",
                  font=("Segoe UI", 8, "italic")).pack(anchor=W, pady=(0, 10))
 
         tree_frame = tb.Frame(list_panel)
@@ -630,22 +630,22 @@ class DashboardFrame(tb.Frame):
         form_frame = tb.Frame(popup, padding=20)
         form_frame.pack(fill=X)
 
-        tb.Label(form_frame, text="🏷️ Nom:").pack(anchor=W, pady=(0, 4))
+        tb.Label(form_frame, text=" Nom:").pack(anchor=W, pady=(0, 4))
         edit_nom = tb.Entry(form_frame, width=35, font=("Segoe UI", 10))
         edit_nom.pack(fill=X, pady=(0, 12))
         edit_nom.insert(0, current_nom)
 
-        tb.Label(form_frame, text="✉️ Email:").pack(anchor=W, pady=(0, 4))
+        tb.Label(form_frame, text="Email:").pack(anchor=W, pady=(0, 4))
         edit_email = tb.Entry(form_frame, width=35, font=("Segoe UI", 10))
         edit_email.pack(fill=X, pady=(0, 12))
         edit_email.insert(0, current_email)
 
-        tb.Label(form_frame, text="🔒 Nouveau mot de passe (laisser vide pour ne pas changer):").pack(
+        tb.Label(form_frame, text="Nouveau mot de passe (laisser vide pour ne pas changer):").pack(
             anchor=W, pady=(0, 4))
         edit_password = tb.Entry(form_frame, width=35, font=("Segoe UI", 10), show="•")
         edit_password.pack(fill=X, pady=(0, 12))
 
-        tb.Label(form_frame, text="🔒 Confirmer le nouveau mot de passe:").pack(anchor=W, pady=(0, 4))
+        tb.Label(form_frame, text="Confirmer le nouveau mot de passe:").pack(anchor=W, pady=(0, 4))
         edit_password_confirm = tb.Entry(form_frame, width=35, font=("Segoe UI", 10), show="•")
         edit_password_confirm.pack(fill=X, pady=(0, 12))
 
@@ -691,11 +691,11 @@ class DashboardFrame(tb.Frame):
         buttons_frame = tb.Frame(popup, padding=(20, 10))
         buttons_frame.pack(fill=X)
 
-        tb.Button(buttons_frame, text="💾 Enregistrer",
+        tb.Button(buttons_frame, text=" Enregistrer",
                   bootstyle="success", width=15,
                   command=save_changes).pack(side=LEFT, padx=(0, 12))
 
-        tb.Button(buttons_frame, text="❌ Annuler",
+        tb.Button(buttons_frame, text=" Annuler",
                   bootstyle="secondary", width=12,
                   command=popup.destroy).pack(side=LEFT)
 
@@ -817,7 +817,7 @@ class DashboardFrame(tb.Frame):
 
         # --- Construction de la fenêtre ---
         popup = tb.Toplevel(self)
-        popup.title(f"🧑‍🔧 Fiche Agent - {agent_nom}")
+        popup.title(f" Fiche Agent - {agent_nom}")
         popup.geometry("900x650")
         popup.transient(self)
         popup.grab_set()
@@ -828,10 +828,10 @@ class DashboardFrame(tb.Frame):
 
         statut_badge = "✅ Actif" if agent_statut == "actif" else "🚫 Désactivé"
 
-        tb.Label(header, text=f"🧑‍🔧 {agent_nom}    [{statut_badge}]",
+        tb.Label(header, text=f" {agent_nom}    [{statut_badge}]",
                  font=("Segoe UI", 18, "bold"),
                  bootstyle="inverse-primary").pack(anchor=W)
-        tb.Label(header, text=f"✉️ {agent_email}    |    📅 Agent depuis le {agent_created_at}",
+        tb.Label(header, text=f" {agent_email}    |     Agent depuis le {agent_created_at}",
                  font=("Segoe UI", 10),
                  bootstyle="inverse-primary").pack(anchor=W, pady=(5, 0))
 
@@ -840,11 +840,11 @@ class DashboardFrame(tb.Frame):
         stats_frame.pack(fill=X)
 
         stats = [
-            ("🔐 Statut du compte", statut_badge),
-            ("📊 Relevés effectués", str(nb_releves)),
-            ("⚡ Consommation totale relevée", f"{total_consommation} kWh"),
-            ("🕓 Dernier relevé", str(dernier_releve) if dernier_releve else "Aucun"),
-            ("✉️ Messages (envoyés / reçus)", f"{nb_messages_envoyes} / {nb_messages_recus}"),
+            (" Statut du compte", statut_badge),
+            (" Relevés effectués", str(nb_releves)),
+            (" Consommation totale relevée", f"{total_consommation} kWh"),
+            (" Dernier relevé", str(dernier_releve) if dernier_releve else "Aucun"),
+            (" Messages (envoyés / reçus)", f"{nb_messages_envoyes} / {nb_messages_recus}"),
         ]
 
         for label_text, value_text in stats:
@@ -857,7 +857,7 @@ class DashboardFrame(tb.Frame):
         history_panel = tb.Frame(popup, padding=(20, 10))
         history_panel.pack(fill=BOTH, expand=True)
 
-        tb.Label(history_panel, text="🗂️ Historique des relevés effectués",
+        tb.Label(history_panel, text=" Historique des relevés effectués",
                  font=("Segoe UI", 13, "bold")).pack(anchor=W, pady=(0, 10))
 
         tree_frame = tb.Frame(history_panel)
@@ -921,7 +921,7 @@ class DashboardFrame(tb.Frame):
         tb.Button(footer, text="🚫 Activer / Désactiver", bootstyle="warning",
                   command=toggle_from_fiche).pack(side=RIGHT, padx=(0, 10))
 
-        tb.Button(footer, text="✏️ Modifier", bootstyle="secondary",
+        tb.Button(footer, text=" Modifier", bootstyle="secondary",
                   command=edit_from_fiche).pack(side=RIGHT, padx=(0, 10))
 
     def create_zones_releve_tab(self):
@@ -936,7 +936,7 @@ class DashboardFrame(tb.Frame):
         automatiquement par correspondance ville/quartier (voir assign_client_zone).
         """
         tab = tb.Frame(self.notebook, padding=30)
-        self.notebook.add(tab, text="🗺️ Zones de Relevé")
+        self.notebook.add(tab, text=" Zones de Relevé")
 
         tb.Label(tab, text="Zones Géographiques de Relevé",
                  font=("Segoe UI", 18, "bold")).pack(anchor=W, pady=(0, 10))
@@ -953,41 +953,41 @@ class DashboardFrame(tb.Frame):
         form_panel = tb.Frame(main_container, bootstyle="light", padding=25)
         form_panel.pack(side=LEFT, fill=Y, padx=(0, 15))
 
-        tb.Label(form_panel, text="➕ Nouvelle Zone",
+        tb.Label(form_panel, text=" Nouvelle Zone",
                  font=("Segoe UI", 14, "bold")).pack(anchor=W, pady=(0, 20))
 
         form_frame = tb.Frame(form_panel)
         form_frame.pack(fill=X, pady=10)
 
-        tb.Label(form_frame, text="🏙️ Ville:").pack(anchor=W, pady=(0, 4))
+        tb.Label(form_frame, text=" Ville:").pack(anchor=W, pady=(0, 4))
         self.zr_ville = tb.Entry(form_frame, width=30, font=("Segoe UI", 10))
         self.zr_ville.pack(fill=X, pady=(0, 12))
 
-        tb.Label(form_frame, text="🏘️ Quartier:").pack(anchor=W, pady=(0, 4))
+        tb.Label(form_frame, text=" Quartier:").pack(anchor=W, pady=(0, 4))
         self.zr_quartier = tb.Entry(form_frame, width=30, font=("Segoe UI", 10))
         self.zr_quartier.pack(fill=X, pady=(0, 12))
 
-        tb.Label(form_frame, text="📌 Secteur:").pack(anchor=W, pady=(0, 4))
+        tb.Label(form_frame, text=" Secteur:").pack(anchor=W, pady=(0, 4))
         self.zr_secteur = tb.Entry(form_frame, width=30, font=("Segoe UI", 10))
         self.zr_secteur.pack(fill=X, pady=(0, 12))
 
-        tb.Label(form_frame, text="🏷️ Nom de la zone (optionnel, auto-généré sinon):").pack(
+        tb.Label(form_frame, text=" Nom de la zone (optionnel, auto-généré sinon):").pack(
             anchor=W, pady=(0, 4))
         self.zr_nom = tb.Entry(form_frame, width=30, font=("Segoe UI", 10))
         self.zr_nom.pack(fill=X, pady=(0, 12))
 
-        tb.Label(form_frame, text="📝 Description:").pack(anchor=W, pady=(0, 4))
+        tb.Label(form_frame, text=" Description:").pack(anchor=W, pady=(0, 4))
         self.zr_description = tb.Text(form_frame, height=3, width=30, font=("Segoe UI", 10))
         self.zr_description.pack(fill=X, pady=(0, 12))
 
         buttons_frame = tb.Frame(form_panel)
-        buttons_frame.pack(fill=X, pady=15)
+        buttons_frame.pack(fill=X, pady=5)
 
-        tb.Button(buttons_frame, text="💾 Créer la zone",
+        tb.Button(buttons_frame, text=" Créer la zone",
                   bootstyle="success", width=15,
                   command=self.create_zone_releve).pack(side=LEFT, padx=(0, 12))
 
-        tb.Button(buttons_frame, text="🗑️ Effacer",
+        tb.Button(buttons_frame, text=" Effacer",
                   bootstyle="secondary", width=10,
                   command=self.clear_zone_releve_form).pack(side=LEFT)
 
@@ -998,22 +998,22 @@ class DashboardFrame(tb.Frame):
         header_frame = tb.Frame(list_panel)
         header_frame.pack(fill=X, pady=(0, 10))
 
-        tb.Label(header_frame, text="📋 Zones Enregistrées",
+        tb.Label(header_frame, text=" Zones Enregistrées",
                  font=("Segoe UI", 14, "bold")).pack(side=LEFT)
 
-        tb.Button(header_frame, text="🔄 Actualiser",
+        tb.Button(header_frame, text=" Actualiser",
                   bootstyle="secondary",
                   command=self.refresh_zones_releve).pack(side=RIGHT)
 
-        tb.Button(header_frame, text="🧑‍🔧 Affecter des agents",
+        tb.Button(header_frame, text=" Affecter des agents",
                   bootstyle="info",
                   command=self.open_zone_agents_popup).pack(side=RIGHT, padx=(0, 10))
 
-        tb.Button(header_frame, text="🗑️ Supprimer",
+        tb.Button(header_frame, text=" Supprimer",
                   bootstyle="danger-outline",
                   command=self.delete_selected_zone_releve).pack(side=RIGHT, padx=(0, 10))
 
-        tb.Label(list_panel, text="💡 Sélectionnez une zone puis cliquez sur \"Affecter des agents\"",
+        tb.Label(list_panel, text=" Sélectionnez une zone puis cliquez sur \"Affecter des agents\"",
                  font=("Segoe UI", 8, "italic")).pack(anchor=W, pady=(0, 10))
 
         tree_frame = tb.Frame(list_panel)
@@ -1245,7 +1245,7 @@ class DashboardFrame(tb.Frame):
             conn.close()
 
         popup = tb.Toplevel(self)
-        popup.title(f"🧑‍🔧 Affecter des agents – {zone_nom}")
+        popup.title(f" Affecter des agents – {zone_nom}")
         popup.geometry("420x500")
         popup.transient(self)
         popup.grab_set()
@@ -1296,11 +1296,11 @@ class DashboardFrame(tb.Frame):
         buttons_frame = tb.Frame(popup, padding=20)
         buttons_frame.pack(fill=X)
 
-        tb.Button(buttons_frame, text="💾 Enregistrer",
+        tb.Button(buttons_frame, text=" Enregistrer",
                   bootstyle="success", width=15,
                   command=save_assignments).pack(side=LEFT, padx=(0, 12))
 
-        tb.Button(buttons_frame, text="❌ Annuler",
+        tb.Button(buttons_frame, text=" Annuler",
                   bootstyle="secondary", width=12,
                   command=popup.destroy).pack(side=LEFT)
 
@@ -1317,10 +1317,10 @@ class DashboardFrame(tb.Frame):
         header_frame = tb.Frame(list_panel)
         header_frame.pack(fill=X, pady=(0, 15))
 
-        tb.Label(header_frame, text="👥 Clients Enregistrés",
+        tb.Label(header_frame, text=" Clients Enregistrés",
                  font=("Segoe UI", 14, "bold")).pack(side=LEFT)
 
-        tb.Button(header_frame, text="🔄 Actualiser",
+        tb.Button(header_frame, text=" Actualiser",
                   bootstyle="secondary",
                   command=self.refresh_clients).pack(side=RIGHT)
 
@@ -1328,7 +1328,7 @@ class DashboardFrame(tb.Frame):
         assign_frame = tb.Frame(list_panel, bootstyle="secondary", padding=15)
         assign_frame.pack(fill=X, pady=(0, 10))
 
-        tb.Label(assign_frame, text="🔌 Attribuer un N° de compteur :",
+        tb.Label(assign_frame, text=" Attribuer un N° de compteur :",
                  font=("Segoe UI", 10, "bold")).pack(side=LEFT, padx=(0, 10))
 
         self.selected_client_label = tb.Label(assign_frame, text="Aucun client sélectionné",
@@ -1338,11 +1338,11 @@ class DashboardFrame(tb.Frame):
         self.meter_entry = tb.Entry(assign_frame, width=20, font=("Segoe UI", 10))
         self.meter_entry.pack(side=LEFT, padx=(0, 10))
 
-        tb.Button(assign_frame, text="💾 Attribuer",
+        tb.Button(assign_frame, text=" Attribuer",
                   bootstyle="success",
                   command=self.assign_meter_number).pack(side=LEFT, padx=(0, 8))
 
-        tb.Button(assign_frame, text="🗑️ Retirer",
+        tb.Button(assign_frame, text=" Retirer",
                   bootstyle="danger-outline",
                   command=self.remove_meter_number).pack(side=LEFT)
 
@@ -1356,7 +1356,7 @@ class DashboardFrame(tb.Frame):
         zone_assign_frame = tb.Frame(list_panel, bootstyle="secondary", padding=15)
         zone_assign_frame.pack(fill=X, pady=(0, 8))
 
-        tb.Label(zone_assign_frame, text="🏙️ Ville / Quartier (déterminent la zone) :",
+        tb.Label(zone_assign_frame, text=" Ville / Quartier (déterminent la zone) :",
                  font=("Segoe UI", 10, "bold")).pack(side=LEFT, padx=(0, 10))
 
         self.client_ville_entry = tb.Entry(zone_assign_frame, width=16, font=("Segoe UI", 10))
@@ -1365,18 +1365,18 @@ class DashboardFrame(tb.Frame):
         self.client_quartier_entry = tb.Entry(zone_assign_frame, width=16, font=("Segoe UI", 10))
         self.client_quartier_entry.pack(side=LEFT, padx=(0, 10))
 
-        tb.Button(zone_assign_frame, text="💾 Enregistrer",
+        tb.Button(zone_assign_frame, text=" Enregistrer",
                   bootstyle="success",
                   command=self.save_client_address).pack(side=LEFT, padx=(0, 15))
 
-        tb.Label(zone_assign_frame, text="📋 Copier l'orthographe d'une zone existante :",
+        tb.Label(zone_assign_frame, text=" Copier l'orthographe d'une zone existante :",
                  font=("Segoe UI", 9)).pack(side=LEFT, padx=(0, 8))
 
         self.client_zone_suggestion_combo = tb.Combobox(zone_assign_frame, width=26,
                                                           font=("Segoe UI", 10), state="readonly")
         self.client_zone_suggestion_combo.pack(side=LEFT, padx=(0, 8))
 
-        tb.Button(zone_assign_frame, text="⬇️ Copier",
+        tb.Button(zone_assign_frame, text=" Copier",
                   bootstyle="info-outline",
                   command=self.copy_zone_into_address_fields).pack(side=LEFT)
 
@@ -1827,14 +1827,14 @@ class DashboardFrame(tb.Frame):
             # response = requests.post(server_url, json=payload, headers=headers)
 
             # Simulation de succès
-            message = f"📤 Données envoyées avec succès!\n\n"
-            message += f"📊 {len(zones_data)} zone(s) transmise(s)\n"
-            message += f"📅 Date: {datetime.now().strftime('%d/%m/%Y %H:%M')}\n\n"
+            message = f" Données envoyées avec succès!\n\n"
+            message += f" {len(zones_data)} zone(s) transmise(s)\n"
+            message += f" Date: {datetime.now().strftime('%d/%m/%Y %H:%M')}\n\n"
 
             for zone in zones_data:
-                message += f"🏷️ {zone['name']} ({zone['type']})\n"
-                message += f"📍 {zone['city']} - {zone['latitude']:.4f}, {zone['longitude']:.4f}\n"
-                message += f"⚡ {zone['voltage']}V - {zone['status']}\n\n"
+                message += f" {zone['name']} ({zone['type']})\n"
+                message += f" {zone['city']} - {zone['latitude']:.4f}, {zone['longitude']:.4f}\n"
+                message += f" {zone['voltage']}V - {zone['status']}\n\n"
 
             messagebox.showinfo("Envoi réussi", message)
 
@@ -1852,7 +1852,7 @@ class DashboardFrame(tb.Frame):
             }
 
             # Simulation d'envoi automatique
-            print(f"📤 Rapport automatique envoyé pour la zone: {zone_data['name']}")
+            print(f" Rapport automatique envoyé pour la zone: {zone_data['name']}")
 
             # Ici vous pouvez ajouter un vrai appel API silencieux
             # response = requests.post("http://your-server/api/auto-report", json=payload)
@@ -1902,7 +1902,7 @@ class DashboardFrame(tb.Frame):
                     marker_color_outside = "black"
 
                 # Créer le marqueur avec les informations détaillées
-                marker_text = f"🏷️ {name}\n🏗️ {zone_type}\n🏙️ {city}\n📊 {status}"
+                marker_text = f" {name}\n {zone_type}\n {city}\n {status}"
                 marker = self.map_widget.set_marker(lat, lng, text=marker_text,
                                          marker_color_circle=marker_color,
                                          marker_color_outside=marker_color_outside,
@@ -1930,7 +1930,7 @@ class DashboardFrame(tb.Frame):
     def create_zone_from_coords(self, lat, lng):
         # Créer une fenêtre popup pour saisir les détails de la zone
         popup = tb.Toplevel(self)
-        popup.title("📍 Ajouter Zone Électrique")
+        popup.title(" Ajouter Zone Électrique")
         popup.geometry("800x700")
         popup.resizable(False, False)
 
@@ -1950,13 +1950,13 @@ class DashboardFrame(tb.Frame):
         coords_frame = tb.Frame(form_frame)
         coords_frame.pack(fill=X, pady=5)
 
-        tb.Label(coords_frame, text="📍 Latitude:").pack(side=LEFT, padx=5)
+        tb.Label(coords_frame, text=" Latitude:").pack(side=LEFT, padx=5)
         lat_entry = tb.Entry(coords_frame, width=15)
         lat_entry.pack(side=LEFT, padx=5)
         lat_entry.insert(0, f"{lat:.6f}")
         lat_entry.config(state="readonly")
 
-        tb.Label(coords_frame, text="📍 Longitude:").pack(side=LEFT, padx=10)
+        tb.Label(coords_frame, text=" Longitude:").pack(side=LEFT, padx=10)
         lng_entry = tb.Entry(coords_frame, width=15)
         lng_entry.pack(side=LEFT, padx=5)
         lng_entry.insert(0, f"{lng:.6f}")
@@ -1966,7 +1966,7 @@ class DashboardFrame(tb.Frame):
         name_frame = tb.Frame(form_frame)
         name_frame.pack(fill=X, pady=5)
 
-        tb.Label(name_frame, text="🏷️ Nom:").pack(side=LEFT, padx=5)
+        tb.Label(name_frame, text=" Nom:").pack(side=LEFT, padx=5)
         name_entry = tb.Entry(name_frame, width=25)
         name_entry.pack(side=LEFT, padx=5)
 
@@ -1974,7 +1974,7 @@ class DashboardFrame(tb.Frame):
         type_frame = tb.Frame(form_frame)
         type_frame.pack(fill=X, pady=5)
 
-        tb.Label(type_frame, text="🔧 Type:").pack(side=LEFT, padx=5)
+        tb.Label(type_frame, text=" Type:").pack(side=LEFT, padx=5)
         type_combo = tb.Combobox(type_frame,
                                 values=["Réseau HT", "Poste de transformation",
                                         "Ligne BT", "Branchement", "Autre"],
@@ -1985,7 +1985,7 @@ class DashboardFrame(tb.Frame):
         city_frame = tb.Frame(form_frame)
         city_frame.pack(fill=X, pady=5)
 
-        tb.Label(city_frame, text="🏙️ Ville:").pack(side=LEFT, padx=5)
+        tb.Label(city_frame, text=" Ville:").pack(side=LEFT, padx=5)
         city_entry = tb.Entry(city_frame, width=25)
         city_entry.pack(side=LEFT, padx=5)
 
@@ -1993,7 +1993,7 @@ class DashboardFrame(tb.Frame):
         voltage_frame = tb.Frame(form_frame)
         voltage_frame.pack(fill=X, pady=5)
 
-        tb.Label(voltage_frame, text="⚡ Tension (V):").pack(side=LEFT, padx=5)
+        tb.Label(voltage_frame, text=" Tension (V):").pack(side=LEFT, padx=5)
         voltage_entry = tb.Entry(voltage_frame, width=15)
         voltage_entry.pack(side=LEFT, padx=5)
 
@@ -2001,10 +2001,10 @@ class DashboardFrame(tb.Frame):
         status_frame = tb.Frame(form_frame)
         status_frame.pack(fill=X, pady=5)
 
-        tb.Label(status_frame, text="📊 État:").pack(side=LEFT, padx=5)
+        tb.Label(status_frame, text=" État:").pack(side=LEFT, padx=5)
         status_combo = tb.Combobox(status_frame,
-                                  values=["✅ Fonctionnel", "🔧 En maintenance",
-                                          "❌ Hors service", "🔨 À réparer"],
+                                  values=["Fonctionnel", " En maintenance",
+                                          "Hors service", " À réparer"],
                                   width=15)
         status_combo.pack(side=LEFT, padx=5)
 
@@ -2012,7 +2012,7 @@ class DashboardFrame(tb.Frame):
         desc_frame = tb.Frame(form_frame)
         desc_frame.pack(fill=X, pady=10)
 
-        tb.Label(desc_frame, text="📝 Description:").pack(anchor=W, padx=5, pady=2)
+        tb.Label(desc_frame, text=" Description:").pack(anchor=W, padx=5, pady=2)
         desc_text = tb.Text(desc_frame, height=3, width=35)
         desc_text.pack(padx=5, pady=2)
 
@@ -2133,15 +2133,15 @@ class DashboardFrame(tb.Frame):
         def cancel():
             popup.destroy()
 
-        tb.Button(buttons_frame, text="💾 Enregistrer & Marquer",
+        tb.Button(buttons_frame, text=" Enregistrer & Marquer",
                   bootstyle="primary",
                   command=lambda: save_and_mark_zone()).pack(side=LEFT, padx=10)
 
-        tb.Button(buttons_frame, text="💾 Enregistrer",
+        tb.Button(buttons_frame, text=" Enregistrer",
                   bootstyle="success",
                   command=save_zone).pack(side=LEFT, padx=10)
 
-        tb.Button(buttons_frame, text="❌ Annuler",
+        tb.Button(buttons_frame, text=" Annuler",
                   bootstyle="secondary",
                   command=cancel).pack(side=LEFT, padx=10)
 
@@ -2241,7 +2241,7 @@ class DashboardFrame(tb.Frame):
 
         conn.close()
 
-        report = f"""📊 Rapport des Zones Électriques
+        report = f""" Rapport des Zones Électriques
 
 Total des zones: {total_zones}
 
@@ -2272,25 +2272,25 @@ Total des zones: {total_zones}
 
         conn.close()
 
-        report = f"""📊 RAPPORT DÉTAILLÉ DES ZONES ÉLECTRIQUES
+        report = f""" RAPPORT DÉTAILLÉ DES ZONES ÉLECTRIQUES
 {'='*50}
 
-📅 Généré le: {datetime.now().strftime('%d/%m/%Y %H:%M')}
+ Généré le: {datetime.now().strftime('%d/%m/%Y %H:%M')}
 
-📈 STATISTIQUES GÉNÉRALES:
+ STATISTIQUES GÉNÉRALES:
 • Total des zones: {total_zones}
 
-🏗️ RÉPARTITION PAR TYPE:
+ RÉPARTITION PAR TYPE:
 """
 
         for zone_type, count in type_counts.items():
             report += f"• {zone_type}: {count}\n"
 
-        report += f"\n📊 RÉPARTITION PAR ÉTAT:\n"
+        report += f"\n RÉPARTITION PAR ÉTAT:\n"
         for status, count in status_counts.items():
             report += f"• {status}: {count}\n"
 
-        report += f"\n🏙️ RÉPARTITION PAR VILLE:\n"
+        report += f"\n RÉPARTITION PAR VILLE:\n"
         for city, count in city_counts:
             report += f"• {city}: {count}\n"
 
@@ -2336,7 +2336,7 @@ Total des zones: {total_zones}
         # Changer temporairement le menu contextuel
         # self.map_widget.delete_all_right_click_menu_commands()  # Méthode non disponible
         self.map_widget.add_right_click_menu_command(
-            label=f"📍 Ajouter {zone_type}",
+            label=f" Ajouter {zone_type}",
             command=lambda coords: self.add_quick_zone_from_map(coords, zone_type),
             pass_coords=True
         )
@@ -2348,7 +2348,7 @@ Total des zones: {total_zones}
         """Remet le menu contextuel normal"""
         # self.map_widget.delete_all_right_click_menu_commands()  # Méthode non disponible
         self.map_widget.add_right_click_menu_command(
-            label="📍 Ajouter Zone Électrique",
+            label=" Ajouter Zone Électrique",
             command=self.add_zone_from_map,
             pass_coords=True
         )
@@ -2359,7 +2359,7 @@ Total des zones: {total_zones}
 
         # Créer une popup simplifiée pour ce type de zone
         popup = tb.Toplevel(self)
-        popup.title(f"📍 Ajouter {zone_type}")
+        popup.title(f" Ajouter {zone_type}")
         popup.geometry("350x400")
         popup.resizable(False, False)
 
@@ -2379,7 +2379,7 @@ Total des zones: {total_zones}
         coords_frame = tb.Frame(form_frame)
         coords_frame.pack(fill=X, pady=5)
 
-        tb.Label(coords_frame, text="📍 Position:").pack(side=LEFT, padx=5)
+        tb.Label(coords_frame, text=" Position:").pack(side=LEFT, padx=5)
         coords_label = tb.Label(coords_frame,
                                text=f"{lat:.4f}, {lng:.4f}",
                                font=("Consolas", 9))
@@ -2389,7 +2389,7 @@ Total des zones: {total_zones}
         name_frame = tb.Frame(form_frame)
         name_frame.pack(fill=X, pady=5)
 
-        tb.Label(name_frame, text="🏷️ Nom:").pack(side=LEFT, padx=5)
+        tb.Label(name_frame, text=" Nom:").pack(side=LEFT, padx=5)
         default_name = f"{zone_type} {datetime.now().strftime('%H%M%S')}"
         name_entry = tb.Entry(name_frame, width=20)
         name_entry.pack(side=LEFT, padx=5)
@@ -2399,7 +2399,7 @@ Total des zones: {total_zones}
         city_frame = tb.Frame(form_frame)
         city_frame.pack(fill=X, pady=5)
 
-        tb.Label(city_frame, text="🏙️ Ville:").pack(side=LEFT, padx=5)
+        tb.Label(city_frame, text=" Ville:").pack(side=LEFT, padx=5)
         city_entry = tb.Entry(city_frame, width=20)
         city_entry.pack(side=LEFT, padx=5)
         city_entry.insert(0, "Kinshasa")  # Valeur par défaut
@@ -2408,7 +2408,7 @@ Total des zones: {total_zones}
         voltage_frame = tb.Frame(form_frame)
         voltage_frame.pack(fill=X, pady=5)
 
-        tb.Label(voltage_frame, text="⚡ Tension (V):").pack(side=LEFT, padx=5)
+        tb.Label(voltage_frame, text=" Tension (V):").pack(side=LEFT, padx=5)
         voltage_entry = tb.Entry(voltage_frame, width=15)
         voltage_entry.pack(side=LEFT, padx=5)
 
@@ -2424,7 +2424,7 @@ Total des zones: {total_zones}
         desc_frame = tb.Frame(form_frame)
         desc_frame.pack(fill=X, pady=5)
 
-        tb.Label(desc_frame, text="📝 Note:").pack(anchor=W, padx=5, pady=2)
+        tb.Label(desc_frame, text=" Note:").pack(anchor=W, padx=5, pady=2)
         desc_text = tb.Text(desc_frame, height=2, width=30)
         desc_text.pack(padx=5, pady=2)
 
@@ -2548,15 +2548,15 @@ Total des zones: {total_zones}
             popup.destroy()
             self.restore_normal_menu()
 
-        tb.Button(buttons_frame, text="💾 Enregistrer & Marquer",
+        tb.Button(buttons_frame, text=" Enregistrer & Marquer",
                   bootstyle="primary",
                   command=save_and_mark_quick_zone).pack(side=LEFT, padx=5)
 
-        tb.Button(buttons_frame, text="💾 Enregistrer",
+        tb.Button(buttons_frame, text=" Enregistrer",
                   bootstyle="success",
                   command=save_quick_zone).pack(side=LEFT, padx=5)
 
-        tb.Button(buttons_frame, text="❌ Annuler",
+        tb.Button(buttons_frame, text=" Annuler",
                   bootstyle="secondary",
                   command=cancel).pack(side=LEFT, padx=5)
 
@@ -2595,7 +2595,7 @@ Total des zones: {total_zones}
             marker_color = color_map.get(zone_type, "gray")
 
             # Créer le texte du popup
-            popup_text = f"🏷️ {name}\n📍 {zone_type}\n📍 {lat:.4f}, {lng:.4f}"
+            popup_text = f" {name}\n {zone_type}\n {lat:.4f}, {lng:.4f}"
 
             # Ajouter le marqueur sur la carte
             if hasattr(self, 'map_widget') and self.map_widget:
